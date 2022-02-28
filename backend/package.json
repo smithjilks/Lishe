@@ -1,0 +1,11 @@
+{
+  "name": "lishe-api",
+  "version": "1.0.0",
+  "description": "Backend for Lishe android app",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "\"Jilks Smith <smithjilks@gmail.com> (https://portfolio.smithjilks.tech)",
+  "license": "ISC"
+}
