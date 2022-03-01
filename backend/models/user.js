@@ -12,6 +12,9 @@ const userSchema = mongoose.Schema({
   organisation: {type: Boolean, required: true},
   organisationName: {type: String, required: false},
   userType: {type: String, required: true},
+},
+{
+  timestamps: true
 });
 
 userSchema.plugin(uniqueValidator);
