@@ -1,13 +1,24 @@
-const Listing = require('../models/listing');
+const History = require('../models/history');
+const mongoose = require('mongoose');
 
-exports.getListings = (req, res, next) => {
+exports.getAllHistory = (req, res, next) => {
   const pageSize = +req.query.pagesize;
   const currentPage = +req.query.page;
-  const listingQuery = Listing.find();
-  let fetchedListings;
+
+  const historyQuery = History
+    .aggregate()
+
+    .lookup({
+      from: 'listings',
+      localField: 'listingId',
+      foreignField: '_id',
+      as: 'historyDetails'
+    });
+
+  let fetchedHistory;
 
   if (pageSize && currentPage) {
-    listingQuery
+    historyQuery
       .sort({ createdAt: 1 })
 
       .skip(pageSize * (currentPage - 1))
@@ -15,58 +26,76 @@ exports.getListings = (req, res, next) => {
       .limit(pageSize);
   }
 
-  listingQuery
+  historyQuery
     .then(documents => {
-      fetchedListings = documents;
-      return Listing.countDocuments();
+      fetchedHistory = documents;
+      return History.countDocuments();
     })
 
     .then(count => {
       res.status(200).json({
         message: 'Succesfully sent from api',
-        body: fetchedListings,
-        maxListings: count
+        body: fetchedHistory,
+        maxHistory: count
       });
     })
 
     .catch(error => {
       res.status(500).json({
-        message: 'Fetching listings failed!',
+        message: 'Fetching history failed!',
         error: error
       });
     });
 };
 
-exports.getListing = (req, res, next) => {
-  Listing
-    .findById(req.params.id)
+exports.getHistory = (req, res, next) => {
+  History
+    .aggregate()
 
-    .then(listing => {
-      if (listing) {
-        res.status(200).json(listing);
+    .lookup({
+      from: 'listings',
+      localField: 'listingId',
+      foreignField: '_id',
+      as: 'historyDetails'
+    })
+    .match({ _id: new mongoose.Types.ObjectId(req.params.id) })
+
+    .then(history => {
+      if (history[0]) {
+        res.status(200).json(history[0]);
       } else {
         res.status(404).json({
-          message: 'Listing does not exist'
+          message: 'History does not exist'
         });
       }
     })
 
     .catch(error => {
       res.status(500).json({
-        message: 'Fetching listing failed!',
+        message: 'Fetching history failed!',
         error: error
       });
     });
 };
 
-exports.getUserListings = (req, res, next) => {
+exports.getUserHistory = (req, res, next) => {
   const pageSize = +req.query.pagesize;
   const currentPage = +req.query.page;
-  const listingQuery = Listing.find({ creator: req.params.id });
-  let fetchedListings;
+  const historyQuery = History
+    .aggregate()
+
+    .lookup({
+      from: 'listings',
+      localField: 'listingId',
+      foreignField: '_id',
+      as: 'historyDetails'
+    })
+    .match({ creator: new mongoose.Types.ObjectId(req.params.id) });
+
+  let fetchedHistory;
 
   if (pageSize && currentPage) {
-    listingQuery
+    historyQuery
       .sort({ createdAt: 1 })
 
       .skip(pageSize * (currentPage - 1))
@@ -74,77 +103,63 @@ exports.getUserListings = (req, res, next) => {
       .limit(pageSize);
   }
 
-  listingQuery
+  historyQuery
     .then(documents => {
-      fetchedListings = documents;
-      return fetchedListings.length;
+      fetchedHistory = documents;
+      return fetchedHistory.length;
     })
 
     .then(count => {
       res.status(200).json({
         message: 'Succesfully sent from api',
-        body: fetchedListings,
-        maxListings: count
+        body: fetchedHistory,
+        maxHistorys: count
       });
     })
 
     .catch(error => {
       res.status(500).json({
-        message: 'Fetching listings failed!',
+        message: 'Fetching history failed!',
         error: error
       });
     });
 };
 
-exports.createListing = (req, res) => {
-  const url = req.protocol + '://' + req.get('host');
-  const listing = new Listing({
-    title: req.body.title,
-    description: req.body.description,
-    imageUrl: url + '/images/listings/' + req.file.filename,
+exports.createHistory = (req, res) => {
+  const history = new History({
     creator: req.userData.userId,
-    latitude: req.body.latitude,
-    longitude: req.body.longitude,
-    expiration: new Date(req.body.expiration), // YYYY-mm-dd
-    status: req.body.status,
-    individual: req.body.individual
+    listingId: req.body.listingId
   });
 
-  listing
+  history
     .save()
 
-    .then(createdListing => {
+    .then(createdHistory => {
       res.status(201).json({
-        mesaage: 'listing added successfully',
-        listing: {
-          ...createdListing._doc,
-          id: createdListing._id
+        mesaage: 'history added successfully',
+        history: {
+          ...createdHistory._doc,
+          id: createdHistory._id
         }
       });
     })
 
     .catch(error => {
       res.status(500).json({
-        message: 'creating a listing failed!',
+        message: 'creating a history failed!',
         error: error
       });
     });
 };
 
-exports.updateListing = (req, res, next) => {
+exports.updateHistory = (req, res, next) => {
   const updateData = req.body;
   updateData._id = req.params.id;
 
-  if (req.file) {
-    const url = req.protocol + '://' + req.get('host');
-    updateData.imageUrl = url + '/images/listings/' + req.file.filename;
-  }
-
-  Listing
+  History
     .updateOne(
       {
-        _id: req.params.id,
-        creator: req.userData.userId
+        _id: req.params.id
       },
       {
         $set: updateData
@@ -160,14 +175,14 @@ exports.updateListing = (req, res, next) => {
 
     .catch(error => {
       res.status(500).json({
-        message: "Couldn't update listing!",
+        message: "Couldn't update history!",
         error: error
       });
     });
 };
 
-exports.deleteListing = (req, res, next) => {
-  Listing
+exports.deleteHistory = (req, res, next) => {
+  History
 
     .deleteOne({
       _id: req.params.id,
@@ -184,7 +199,7 @@ exports.deleteListing = (req, res, next) => {
 
     .catch(error => {
       res.status(500).json({
-        message: 'Deleting listing failed!',
+        message: 'Deleting history failed!',
         error: error
       });
     });
