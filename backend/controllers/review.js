@@ -1,24 +1,30 @@
-const History = require('../models/history');
+const Review = require('../models/review');
 const mongoose = require('mongoose');
 
-exports.getAllHistory = (req, res, next) => {
+exports.getReviews = (req, res, next) => {
   const pageSize = +req.query.pagesize;
   const currentPage = +req.query.page;
 
-  const historyQuery = History
+  const reviewQuery = Review
     .aggregate()
 
     .lookup({
+      from: 'histories',
+      localField: 'historyId',
+      foreignField: '_id',
+      as: 'historyDetails'
+    })
+    .lookup({
       from: 'listings',
-      localField: 'listingId',
+      localField: 'historyDetails.listingId',
       foreignField: '_id',
       as: 'listingDetails'
     });
 
-  let fetchedHistory;
+  let fetchedReview;
 
   if (pageSize && currentPage) {
-    historyQuery
+    reviewQuery
       .sort({ createdAt: 1 })
 
       .skip(pageSize * (currentPage - 1))
@@ -26,76 +32,92 @@ exports.getAllHistory = (req, res, next) => {
       .limit(pageSize);
   }
 
-  historyQuery
+  reviewQuery
     .then(documents => {
-      fetchedHistory = documents;
-      return History.countDocuments();
+      fetchedReview = documents;
+      return Review.countDocuments();
     })
 
     .then(count => {
       res.status(200).json({
         message: 'Succesfully sent from api',
-        body: fetchedHistory,
-        maxHistory: count
+        body: fetchedReview,
+        maxReview: count
       });
     })
 
     .catch(error => {
       res.status(500).json({
-        message: 'Fetching history failed!',
+        message: 'Fetching review failed!',
         error: error
       });
     });
 };
 
-exports.getHistory = (req, res, next) => {
-  History
+exports.getReview = (req, res, next) => {
+  Review
     .aggregate()
 
     .lookup({
+      from: 'histories',
+      localField: 'historyId',
+      foreignField: '_id',
+      as: 'historyDetails'
+    })
+
+    .lookup({
       from: 'listings',
-      localField: 'listingId',
+      localField: 'historyDetails.listingId',
       foreignField: '_id',
       as: 'listingDetails'
     })
+
     .match({ _id: new mongoose.Types.ObjectId(req.params.id) })
 
-    .then(history => {
-      if (history[0]) {
-        res.status(200).json(history[0]);
+    .then(review => {
+      if (review[0]) {
+        res.status(200).json(review[0]);
       } else {
         res.status(404).json({
-          message: 'History does not exist'
+          message: 'Review does not exist'
         });
       }
     })
 
     .catch(error => {
       res.status(500).json({
-        message: 'Fetching history failed!',
+        message: 'Fetching review failed!',
         error: error
       });
     });
 };
 
-exports.getUserHistory = (req, res, next) => {
+exports.getUserReviews = (req, res, next) => {
   const pageSize = +req.query.pagesize;
   const currentPage = +req.query.page;
-  const historyQuery = History
+  const reviewQuery = Review
     .aggregate()
 
     .lookup({
-      from: 'listings',
-      localField: 'listingId',
+      from: 'histories',
+      localField: 'historyId',
       foreignField: '_id',
       as: 'historyDetails'
     })
+
+    .lookup({
+      from: 'listings',
+      localField: 'historyDetails.listingId',
+      foreignField: '_id',
+      as: 'listingDetails'
+    })
+
     .match({ creator: new mongoose.Types.ObjectId(req.params.id) });
 
-  let fetchedHistory;
+  let fetchedReview;
 
   if (pageSize && currentPage) {
-    historyQuery
+    reviewQuery
       .sort({ createdAt: 1 })
 
       .skip(pageSize * (currentPage - 1))
@@ -103,66 +125,70 @@ exports.getUserHistory = (req, res, next) => {
       .limit(pageSize);
   }
 
-  historyQuery
+  reviewQuery
     .then(documents => {
-      fetchedHistory = documents;
-      return fetchedHistory.length;
+      fetchedReview = documents;
+      return fetchedReview.length;
     })
 
     .then(count => {
       res.status(200).json({
         message: 'Succesfully sent from api',
-        body: fetchedHistory,
-        maxHistorys: count
+        body: fetchedReview,
+        maxReviews: count
       });
     })
 
     .catch(error => {
       res.status(500).json({
-        message: 'Fetching history failed!',
+        message: 'Fetching review failed!',
         error: error
       });
     });
 };
 
-exports.createHistory = (req, res) => {
-  const history = new History({
+exports.createReview = (req, res) => {
+  const review = new Review({
     creator: req.userData.userId,
-    listingId: req.body.listingId
+    createdFor: req.body.createdFor,
+    rating: req.body.rating,
+    description: req.body.description,
+    historyId: req.body.historyId
   });
 
-  history
+  review
     .save()
 
-    .then(createdHistory => {
+    .then(createdReview => {
       res.status(201).json({
-        mesaage: 'history added successfully',
-        history: {
-          ...createdHistory._doc,
-          id: createdHistory._id
+        mesaage: 'review added successfully',
+        review: {
+          ...createdReview._doc,
+          id: createdReview._id
         }
       });
     })
 
     .catch(error => {
       res.status(500).json({
-        message: 'creating a history failed!',
+        message: 'creating a review failed!',
         error: error
       });
     });
 };
 
-exports.updateHistory = (req, res, next) => {
+exports.updateReview = (req, res, next) => {
   const updateData = req.body;
   updateData._id = req.params.id;
 
-  History
+  Review
     .updateOne(
       {
         _id: req.params.id
       },
       {
-        $set: updateData
+        $set: updateData,
+        creator: req.userData.userId
       })
 
     .then(result => {
@@ -175,14 +201,14 @@ exports.updateHistory = (req, res, next) => {
 
     .catch(error => {
       res.status(500).json({
-        message: "Couldn't update history!",
+        message: "Couldn't update review!",
         error: error
       });
     });
 };
 
-exports.deleteHistory = (req, res, next) => {
-  History
+exports.deleteReview = (req, res, next) => {
+  Review
 
     .deleteOne({
       _id: req.params.id,
@@ -199,7 +225,7 @@ exports.deleteHistory = (req, res, next) => {
 
     .catch(error => {
       res.status(500).json({
-        message: 'Deleting history failed!',
+        message: 'Deleting review failed!',
         error: error
       });
     });
