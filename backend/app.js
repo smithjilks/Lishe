@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 const userRoutes = require('./routes/user');
 const listingRoutes = require('./routes/listing');
 const historyRoutes = require('./routes/history');
+const reviewRoutes = require('./routes/review');
 
 const app = express();
 
@@ -26,5 +27,6 @@ app.use('/images', express.static(path.join(__dirname, 'images')));
 app.use('/api/v1/users', userRoutes);
 app.use('/api/v1/listings', listingRoutes);
 app.use('/api/v1/history', historyRoutes);
+app.use('/api/v1/reviews', reviewRoutes);
 
 module.exports = app;
