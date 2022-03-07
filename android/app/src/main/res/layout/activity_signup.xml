@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    tools:context=".SignupActivity">
+
+    <TextView
+        android:id="@+id/register_below"
+        style="@style/Widget.Lishe.HeadingTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Get Started"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/signup_firstname"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:hint="@string/first_name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/register_below" >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/signup_firstname_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textCapWords"
+            android:textColorHint="#757575" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/signup_lastname"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:hint="@string/last_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/signup_firstname"
+        app:layout_constraintTop_toTopOf="@id/signup_firstname"
+        app:layout_constraintBottom_toBottomOf="@id/signup_firstname" >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/signup_lastname_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textCapWords"
+            android:textColorHint="#757575" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/signup_email"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:hint="@string/email"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/signup_lastname" >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/signup_email_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:textColorHint="#757575" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/signup_phone"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:hint="Phone Number"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/signup_email" >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/signup_phone_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="phone"
+            android:textColorHint="#757575" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/signup_password"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:hint="@string/password"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/signup_phone" >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/signup_password_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:textColorHint="#757575" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/signup_confirm_password"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/confirm_password"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/signup_password"
+        app:layout_constraintTop_toTopOf="@id/signup_password"
+        app:layout_constraintTop_toBottomOf="@id/signup_password" >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/signup_confirm_password_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:textColorHint="#757575" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/who_am_i_question"
+        style="@style/Widget.Lishe.TextView"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Who am I?"
+        app:layout_constraintStart_toStartOf="@id/signup_password"
+        app:layout_constraintTop_toBottomOf="@id/signup_password" />
+
+    <RadioGroup
+        android:id="@+id/user_organisation_options"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:checkedButton="@id/option_individual"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="@id/who_am_i_question"
+        app:layout_constraintTop_toBottomOf="@+id/who_am_i_question">
+
+        <RadioButton
+            android:id="@+id/option_individual"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/individual" />
+
+        <RadioButton
+            android:id="@+id/option_organisation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/organisation" />
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/what_will_i_do_question"
+        style="@style/Widget.Lishe.TextView"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/i_will_be"
+        app:layout_constraintStart_toStartOf="@id/user_organisation_options"
+        app:layout_constraintTop_toBottomOf="@id/user_organisation_options" />
+
+    <RadioGroup
+        android:id="@+id/user_activity_options"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:checkedButton="@id/option_collect"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="@id/what_will_i_do_question"
+        app:layout_constraintTop_toBottomOf="@+id/what_will_i_do_question">
+
+        <RadioButton
+            android:id="@+id/option_collect"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/collecting_food" />
+
+        <RadioButton
+            android:id="@+id/option_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/listing_food" />
+    </RadioGroup>
+
+    <com.google.android.material.card.MaterialCardView
+        style="@style/Widget.Lishe.Avatar"
+        android:layout_marginTop="8dp"
+        app:cardCornerRadius="27dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/user_activity_options">
+        <ImageView
+            android:id="@+id/icon_cost_of_service"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:importantForAccessibility="no"
+            app:srcCompat="@drawable/ic_avatar" />
+
+    </com.google.android.material.card.MaterialCardView>
+
+
+
+    <Button
+        android:id="@+id/signup_signup_button"
+        style="@style/Widget.Lishe.PrimaryButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/signup"
+        app:layout_constraintBottom_toTopOf="@+id/signup_have_account_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/signup_have_account_button"
+        style="@style/Widget.Lishe.TextButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/already_have_an_account"
+        app:layout_constraintStart_toStartOf="@id/signup_signup_button"
+        app:layout_constraintEnd_toEndOf="@id/signup_signup_button"
+        app:layout_constraintBottom_toBottomOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

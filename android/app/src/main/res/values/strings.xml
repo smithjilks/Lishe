@@ -7,4 +7,13 @@
     <string name="email">Email</string>
     <string name="welcome_back">Welcome Back</string>
     <string name="tagline">Sharing food is caring</string>
+    <string name="already_have_an_account">I Already have an account?</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="individual">An Individual</string>
+    <string name="organisation">An Organisation</string>
+    <string name="collecting_food">Collecting Food</string>
+    <string name="listing_food">Listing Food</string>
+    <string name="i_will_be">I will be:</string>
 </resources>
