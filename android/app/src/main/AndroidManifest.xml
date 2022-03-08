@@ -10,8 +10,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Lishe">
         <activity
-            android:name=".FoodListingDetailsActivity"
-            android:exported="true" >
+            android:name=".MainActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -19,12 +19,14 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".FoodListingDetailsActivity"
+            android:exported="false"></activity>
+        <activity
             android:name=".CreateListingActivity"
-            android:exported="false">
-        </activity>
+            android:exported="false"></activity>
         <activity
             android:name=".SignupActivity"
-            android:exported="false"></activity>
+            android:exported="false" />
         <activity
             android:name=".LoginActivity"
             android:exported="false" />
