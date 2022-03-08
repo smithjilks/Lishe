@@ -1,3 +1,40 @@
 <resources>
     <string name="app_name">Lishe</string>
+    <string name="forgot_password">forgot password?</string>
+    <string name="login">login</string>
+    <string name="signup">signup</string>
+    <string name="password">Password</string>
+    <string name="email">Email</string>
+    <string name="welcome_back">Welcome Back</string>
+    <string name="tagline">Sharing food is caring</string>
+    <string name="already_have_an_account">I Already have an account?</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="individual">An Individual</string>
+    <string name="organisation">An Organisation</string>
+    <string name="collecting_food">Collecting Food</string>
+    <string name="listing_food">Listing Food</string>
+    <string name="i_will_be">I will be:</string>
+    <string name="create_a_food_listing">Create a Food Listing</string>
+    <string name="food_title">Food Title</string>
+    <string name="food_description">Food Description</string>
+    <string name="expiration_date">Expiration Date</string>
+    <string name="select_location">Select Location</string>
+    <string name="select_image">Select Image</string>
+    <string name="food_listing_details">Food Listing Details</string>
+    <string name="jonh_doe">Jonh Doe</string>
+    <string name="burger">Burger</string>
+    <string name="description">A hamburger (or burger for short) is a food consisting of fillings —usually a patty of ground meat, typically beef—placed inside a sliced bun or bread roll.</string>
+    <string name="request_listing">Request Listing</string>
+    <string name="palceholder_tel">+254 712 345 678</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="my_profile">My Profile</string>
+    <string name="placeholder_email">johndoe@gmail.com</string>
+    <string name="rating">Rating</string>
+    <string name="my_reviews">My Reviews</string>
+    <string name="my_listings">My listings</string>
+    <string name="sign_out">Sign Out</string>
+    <string name="stats">Stats</string>
 </resources>

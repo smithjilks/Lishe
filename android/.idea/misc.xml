@@ -1,5 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="app/src/main/res/drawable/avatar_background.xml" value="0.165" />
+        <entry key="app/src/main/res/drawable/ic_avatar.xml" value="0.114" />
+        <entry key="app/src/main/res/drawable/ic_calendar.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/ic_history.xml" value="0.2005" />
+        <entry key="app/src/main/res/drawable/ic_location.xml" value="0.2005" />
+        <entry key="app/src/main/res/layout/activity_create_listing.xml" value="0.2024793388429752" />
+        <entry key="app/src/main/res/layout/activity_food_listing_details.xml" value="0.29878048780487804" />
+        <entry key="app/src/main/res/layout/activity_intro.xml" value="0.135678391959799" />
+        <entry key="app/src/main/res/layout/activity_login.xml" value="0.1588235294117647" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.17119565217391305" />
+        <entry key="app/src/main/res/layout/activity_signup.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/food_listing_item.xml" value="0.44701348747591524" />
+        <entry key="app/src/main/res/layout/fragment_history.xml" value="0.18795289855072464" />
+        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.18795289855072464" />
+        <entry key="app/src/main/res/layout/fragment_user_profile.xml" value="0.25" />
+        <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.1984375" />
+      </map>
+    </option>
+  </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
