@@ -26,6 +26,7 @@
         <item name="android:minHeight">@dimen/min_button_height</item>
     </style>
 
+
     <style name="Widget.Lishe.TextButton" parent="Widget.MaterialComponents.Button.TextButton">
         <item name="android:minHeight">@dimen/min_button_height</item>
     </style>

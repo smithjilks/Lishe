@@ -15,6 +15,9 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.17119565217391305" />
         <entry key="app/src/main/res/layout/activity_signup.xml" value="0.1" />
         <entry key="app/src/main/res/layout/food_listing_item.xml" value="0.44701348747591524" />
+        <entry key="app/src/main/res/layout/fragment_history.xml" value="0.18795289855072464" />
+        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.18795289855072464" />
+        <entry key="app/src/main/res/layout/fragment_user_profile.xml" value="0.25" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.1984375" />
       </map>
     </option>

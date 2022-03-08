@@ -28,4 +28,13 @@
     <string name="description">A hamburger (or burger for short) is a food consisting of fillings —usually a patty of ground meat, typically beef—placed inside a sliced bun or bread roll.</string>
     <string name="request_listing">Request Listing</string>
     <string name="palceholder_tel">+254 712 345 678</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="my_profile">My Profile</string>
+    <string name="placeholder_email">johndoe@gmail.com</string>
+    <string name="rating">Rating</string>
+    <string name="my_reviews">My Reviews</string>
+    <string name="my_listings">My listings</string>
+    <string name="sign_out">Sign Out</string>
+    <string name="stats">Stats</string>
 </resources>
