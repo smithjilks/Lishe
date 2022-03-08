@@ -9,11 +9,12 @@
         <entry key="app/src/main/res/drawable/ic_history.xml" value="0.2005" />
         <entry key="app/src/main/res/drawable/ic_location.xml" value="0.2005" />
         <entry key="app/src/main/res/layout/activity_create_listing.xml" value="0.2024793388429752" />
-        <entry key="app/src/main/res/layout/activity_food_listing_details.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_food_listing_details.xml" value="0.29878048780487804" />
         <entry key="app/src/main/res/layout/activity_intro.xml" value="0.135678391959799" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.1588235294117647" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.17119565217391305" />
         <entry key="app/src/main/res/layout/activity_signup.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/food_listing_item.xml" value="0.44701348747591524" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.1984375" />
       </map>
     </option>

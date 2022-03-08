@@ -83,7 +83,7 @@
         app:layout_constraintTop_toBottomOf="@id/create_listing_expiration">
 
         <ImageView
-            android:id="@+id/create_listing_image"
+            android:id="@+id/food_details_image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:importantForAccessibility="no"
