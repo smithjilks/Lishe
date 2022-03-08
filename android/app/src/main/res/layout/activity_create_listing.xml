@@ -23,9 +23,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:hint="@string/food_title"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/create_listing" >
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/create_listing">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/create_listing_title_edit_text"
@@ -41,19 +41,19 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:hint="@string/food_description"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/create_listing_title" >
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/create_listing_title">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/create_listing_description_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="top"
             android:inputType="textMultiLine"
-            android:textColorHint="#757575"
-            android:minLines="5"
             android:maxLines="8"
-            android:gravity="top"/>
+            android:minLines="5"
+            android:textColorHint="#757575" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -62,16 +62,16 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:hint="@string/expiration_date"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/create_listing_description" >
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/create_listing_description">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/create_listing_expiration_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="date"
-            android:textColorHint="#757575"/>
+            android:textColorHint="#757575" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.card.MaterialCardView
@@ -79,8 +79,8 @@
         android:layout_width="96dp"
         android:layout_height="96dp"
         android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@id/create_listing_expiration"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/create_listing_expiration">
 
         <ImageView
             android:id="@+id/create_listing_image"
@@ -97,8 +97,8 @@
         style="@style/Widget.Lishe.SecondaryButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/select_image"
         android:layout_marginLeft="8dp"
+        android:text="@string/select_image"
         app:layout_constraintBottom_toBottomOf="@+id/create_listing_image_card"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/create_listing_image_card"
@@ -110,8 +110,8 @@
         android:layout_height="48dp"
         android:layout_marginTop="8dp"
         android:importantForAccessibility="no"
-        app:layout_constraintTop_toBottomOf="@id/create_listing_image_card"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/create_listing_image_card"
         app:srcCompat="@drawable/ic_location" />
 
     <TextView
@@ -119,10 +119,10 @@
         style="@style/Widget.Lishe.TextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Nairobi"
         android:padding="8dp"
-        app:layout_constraintStart_toStartOf="@id/create_listing_select_image_button"
+        android:text="Nairobi"
         app:layout_constraintEnd_toEndOf="@id/create_listing_select_image_button"
+        app:layout_constraintStart_toStartOf="@id/create_listing_select_image_button"
         app:layout_constraintTop_toTopOf="@id/create_listing_location_icon" />
 
     <Button
@@ -131,9 +131,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/select_location"
-        app:layout_constraintTop_toBottomOf="@+id/create_listing_location_text_view"
         app:layout_constraintEnd_toEndOf="@id/create_listing_location_text_view"
-        app:layout_constraintStart_toStartOf="@id/create_listing_location_text_view" />
+        app:layout_constraintStart_toStartOf="@id/create_listing_location_text_view"
+        app:layout_constraintTop_toBottomOf="@+id/create_listing_location_text_view" />
 
     <Button
         android:id="@+id/create_listing_button"
@@ -141,13 +141,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Create Listing"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
-
-
-
-
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
