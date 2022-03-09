@@ -7,6 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 
 
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(R.layout.fragment_home){
 
 }

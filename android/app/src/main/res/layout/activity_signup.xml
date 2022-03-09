@@ -208,7 +208,7 @@
 
 
     <Button
-        android:id="@+id/signup_signup_button"
+        android:id="@+id/signup_button"
         style="@style/Widget.Lishe.PrimaryButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -224,7 +224,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="@string/already_have_an_account"
-        app:layout_constraintStart_toStartOf="@id/signup_signup_button"
-        app:layout_constraintEnd_toEndOf="@id/signup_signup_button"
+        app:layout_constraintStart_toStartOf="@id/signup_button"
+        app:layout_constraintEnd_toEndOf="@id/signup_button"
         app:layout_constraintBottom_toBottomOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

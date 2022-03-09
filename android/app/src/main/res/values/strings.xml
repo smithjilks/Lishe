@@ -37,4 +37,6 @@
     <string name="my_listings">My listings</string>
     <string name="sign_out">Sign Out</string>
     <string name="stats">Stats</string>
+    <string name="error_password">Password cannot be less than 8</string>
+    <string name="error_email">Enter a valid email address</string>
 </resources>
