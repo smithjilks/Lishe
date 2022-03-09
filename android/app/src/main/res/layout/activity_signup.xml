@@ -157,6 +157,24 @@
             android:text="@string/organisation" />
     </RadioGroup>
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/signup_organisation_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/organisation_name"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/user_organisation_options"
+        app:layout_constraintBottom_toBottomOf="@id/user_organisation_options">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/signup_organisation_name_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:textColorHint="#757575" />
+    </com.google.android.material.textfield.TextInputLayout>
+
     <TextView
         android:id="@+id/what_will_i_do_question"
         style="@style/Widget.Lishe.TextView"
@@ -190,13 +208,14 @@
     </RadioGroup>
 
     <com.google.android.material.card.MaterialCardView
+        android:id="@+id/signup_avatar_card"
         style="@style/Widget.Lishe.Avatar"
         android:layout_marginTop="8dp"
         app:cardCornerRadius="27dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/user_activity_options">
         <ImageView
-            android:id="@+id/icon_cost_of_service"
+            android:id="@+id/profile_image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
@@ -204,6 +223,18 @@
             app:srcCompat="@drawable/ic_avatar" />
 
     </com.google.android.material.card.MaterialCardView>
+
+    <TextView
+        android:id="@+id/click_to_choose_image"
+        style="@style/TextAppearance.MaterialComponents.Caption"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/select_image"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/signup_avatar_card"/>
 
 
 

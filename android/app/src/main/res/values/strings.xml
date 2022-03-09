@@ -39,4 +39,8 @@
     <string name="stats">Stats</string>
     <string name="error_password">Password cannot be less than 8</string>
     <string name="error_email">Enter a valid email address</string>
+    <string name="organisation_name">Organisation Name</string>
+    <string name="error_required">Required Field</string>
+    <string name="error_passwords_dont_match">Passwords do not match</string>
+    <string name="upload_image">Upload Image</string>
 </resources>
