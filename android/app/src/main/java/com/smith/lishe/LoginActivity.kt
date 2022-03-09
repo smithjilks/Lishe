@@ -1,21 +1,33 @@
 package com.smith.lishe
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.Editable
+import android.util.Log
 import android.util.Patterns
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.smith.lishe.data.user.datasource.AuthRemoteDataSource
 import com.smith.lishe.data.user.repository.LoginRepository
 import com.smith.lishe.databinding.ActivityLoginBinding
+import com.smith.lishe.model.AuthApiModel
 import com.smith.lishe.model.UserLoginInfo
 import com.smith.lishe.network.UserApi
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+
 
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
+    private val sharedPrefFile = "com.smith.lishe.user"
+
+    companion object {
+        const val USER_TOKEN = "token"
+        const val USER_ID = "userId"
+    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -64,6 +76,7 @@ class LoginActivity : AppCompatActivity() {
                 userLoginInfo
             ).fetchAuthData()
 
+            saveUser(response)
             val intent = Intent(this, MainActivity::class.java)
             intent.flags = (Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(intent)
@@ -78,6 +91,15 @@ class LoginActivity : AppCompatActivity() {
             })
         }
 
+
+    }
+
+    private fun saveUser(user: AuthApiModel) {
+        val userPreferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
+        val preferencesEditor: SharedPreferences.Editor = userPreferences.edit()
+        preferencesEditor.putString(LoginActivity.USER_ID, user.userId)
+        preferencesEditor.putString(LoginActivity.USER_TOKEN, user.token)
+        preferencesEditor.apply()
 
     }
 
