@@ -10,17 +10,21 @@ import com.smith.lishe.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
+    companion object {
+        const val LISTING_ID = "listingId"
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
 
-        if (savedInstanceState == null) {
-            supportFragmentManager.commit {
-                setReorderingAllowed(true)
-                    .add<HomeFragment>(R.id.nav_host_fragment)
-            }
+
+        supportFragmentManager.beginTransaction().apply {
+            replace(binding.navHostFragment.id, HomeFragment())
+            addToBackStack(null)
+            commit()
         }
 
         binding.bottomNavigation.setOnItemSelectedListener {
@@ -37,14 +41,18 @@ class MainActivity : AppCompatActivity() {
                 }
             }
             if (selectedFragment != null) {
-                supportFragmentManager
-                    .beginTransaction()
-                    .replace(R.id.nav_host_fragment, selectedFragment)
-                    .commit()
+                changeFragment(selectedFragment)
             };
 
             return@setOnItemSelectedListener true
         }
 
+    }
+    private fun changeFragment(fragmentToChange: Fragment): Unit {
+        supportFragmentManager.beginTransaction().apply {
+            replace(binding.navHostFragment.id, fragmentToChange)
+            addToBackStack(null)
+            commit()
+        }
     }
 }
