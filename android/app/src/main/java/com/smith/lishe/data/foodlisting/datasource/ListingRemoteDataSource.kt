@@ -23,7 +23,8 @@ class ListingRemoteDataSource(
             listingAPI.retrofitService.getAllListings()
         }
 
-    suspend fun createNewListing( title: RequestBody,
+    suspend fun createNewListing( token: String,
+                                  title: RequestBody,
                                   description: RequestBody,
                                   latitude: RequestBody,
                                   longitude: RequestBody,
@@ -33,7 +34,7 @@ class ListingRemoteDataSource(
     // Move the execution to an IO-optimized thread since the ApiService
         // doesn't support coroutines and makes synchronous requests.
         withContext(ioDispatcher) {
-            listingAPI.retrofitService.createNewListing(title, description, latitude, longitude,
+            listingAPI.retrofitService.createNewListing(token, title, description, latitude, longitude,
                 expiration, individual, listingImage)
         }
 

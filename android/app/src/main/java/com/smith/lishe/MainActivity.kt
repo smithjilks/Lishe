@@ -1,11 +1,8 @@
 package com.smith.lishe
 
-import android.app.Application
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.add
-import androidx.fragment.app.commit
 import com.smith.lishe.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {

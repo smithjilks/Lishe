@@ -105,7 +105,7 @@
             android:layout_height="match_parent"
             android:importantForAccessibility="no"
             android:scaleType="centerCrop"
-            app:srcCompat="@drawable/burger" />
+            app:srcCompat="@drawable/ic_food" />
 
     </com.google.android.material.card.MaterialCardView>
 
@@ -151,6 +151,14 @@
         app:layout_constraintEnd_toEndOf="@id/create_listing_location_text_view"
         app:layout_constraintStart_toStartOf="@id/create_listing_location_text_view"
         app:layout_constraintTop_toBottomOf="@+id/create_listing_location_text_view" />
+
+    <fragment
+        android:id="@+id/place_autocomplete_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
     <Button
         android:id="@+id/create_listing_button"

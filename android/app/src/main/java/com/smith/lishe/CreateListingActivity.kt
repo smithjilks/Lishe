@@ -1,6 +1,6 @@
 package com.smith.lishe
 
-import android.R.attr
+import android.app.Activity
 import android.content.Intent
 import android.content.SharedPreferences
 import android.database.Cursor
@@ -12,19 +12,18 @@ import android.view.View
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.gms.common.GooglePlayServicesNotAvailableException
-import com.google.android.gms.common.GooglePlayServicesRepairableException
-import com.google.android.gms.common.api.Status
-import com.google.android.gms.location.places.Place
-import com.google.android.gms.location.places.Places
-import com.google.android.gms.location.places.ui.PlacePicker
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.LatLngBounds
+import com.google.android.libraries.places.api.Places
+import com.google.android.libraries.places.api.model.Place
+import com.google.android.libraries.places.widget.Autocomplete
+import com.google.android.libraries.places.widget.AutocompleteActivity
+import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.DateValidatorPointForward
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.smith.lishe.BuildConfig.GOOGLE_MAPS_API_KEY
 import com.smith.lishe.data.foodlisting.datasource.ListingRemoteDataSource
+import com.smith.lishe.data.requests.datasource.RequestsRemoteDataSource
 import com.smith.lishe.databinding.ActivityCreateListingBinding
 import com.smith.lishe.network.ListingApi
 import kotlinx.coroutines.Dispatchers
@@ -45,23 +44,26 @@ class CreateListingActivity : AppCompatActivity() {
     private val AUTOCOMPLETE_REQUEST_CODE = 3
 
     private var sharedPreferences: SharedPreferences? = null
-    private val sharedPrefFile = "com.example.android.hellosharedprefs"
+    private val sharedPrefFile = "com.smith.lishe.user"
 
     private var foodImageUri: Uri? = null
     private var progressBar: ProgressBar? = null
 
     private var locationLatLng: LatLng? = null
-    private var userType: String? = ""
     private val TAG = "CreateListingActivity"
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         binding = ActivityCreateListingBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        sharedPreferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
-        userType =  sharedPreferences!!.getString(LoginActivity.USER_TYPE, "individual");
+        sharedPreferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE)
+        val userType =  sharedPreferences!!.getString(LoginActivity.USER_TYPE, "individual")
+
+        progressBar = binding.createListingProgressBar
+        progressBar!!.visibility = View.GONE
 
         val constraintsBuilder =
             CalendarConstraints.Builder()
@@ -75,10 +77,10 @@ class CreateListingActivity : AppCompatActivity() {
                 .build()
 
         binding.createListingButton.setOnClickListener {
-            progressBar = binding.createListingProgressBar
-            progressBar!!.visibility = View.VISIBLE
-
             if (isValidUserInput()) {
+                progressBar!!.visibility = View.VISIBLE
+                binding.createListingButton.isEnabled = false
+
                 val foodTitle = RequestBody.create( MediaType.parse("multipart/form-data"), binding.createListingTitleEditText.text.toString())
                 val foodDescription = RequestBody.create( MediaType.parse("multipart/form-data"),binding.createListingDescriptionEditText.text.toString())
                 val expirationDate = RequestBody.create( MediaType.parse("multipart/form-data"), binding.createListingExpirationDateTextView.text.toString())
@@ -102,7 +104,8 @@ class CreateListingActivity : AppCompatActivity() {
                             latitude,
                             longitude,
                             individual,
-                            imageRequestBody)
+                            imageRequestBody
+                        )
                     }
 
                 }
@@ -111,7 +114,7 @@ class CreateListingActivity : AppCompatActivity() {
 
         binding.createListingSelectImageButton.setOnClickListener { openGalleryForImage() }
 
-        binding.createListingSelectLocationButton.setOnClickListener { openPlacePickerView() }
+        binding.createListingSelectLocationButton.setOnClickListener { getLocation() }
 
         binding.createListingSelectExpirationDateButton.setOnClickListener {
             datePicker.addOnPositiveButtonClickListener {
@@ -119,7 +122,7 @@ class CreateListingActivity : AppCompatActivity() {
                 val date = LocalDate.parse(datePicker.headerText.toString(), formatter)
                 binding.createListingExpirationDateTextView.text = date.toString()
             }
-            datePicker.show(supportFragmentManager, "tag");
+            datePicker.show(supportFragmentManager, "tag")
         }
 
     }
@@ -135,34 +138,38 @@ class CreateListingActivity : AppCompatActivity() {
     ) {
 
         try {
+            Log.d("Check Request Body", foodTitle.toString())
             val response = ListingRemoteDataSource(ListingApi, Dispatchers.IO).createNewListing(
+                "Bearer ${sharedPreferences!!.getString(LoginActivity.USER_TOKEN, "")}",
                 foodTitle,
                 foodDescription,
-                expirationDate,
                 latitude,
                 longitude,
+                expirationDate,
                 individual,
                 imageFile)
 
-            progressBar!!.visibility = View.INVISIBLE
-            runOnUiThread(java.lang.Runnable {
+            runOnUiThread {
+                onBackPressed()
                 Toast.makeText(
                     this,
-                    "Registration Successful",
+                    "Create Listing Successful",
                     Toast.LENGTH_LONG
                 ).show()
-            })
+            }
 
         } catch (e: Exception) {
-            Log.e("Create Listing Error", e.toString())
-            progressBar!!.visibility = View.INVISIBLE
-            runOnUiThread(java.lang.Runnable {
+            Log.e("Create Listings Error", e.toString())
+            runOnUiThread {
+                progressBar!!.visibility = View.INVISIBLE
+                binding.createListingButton.isEnabled = true
                 Toast.makeText(
                     this,
                     "Create Listing Failed. Try again",
                     Toast.LENGTH_LONG
                 ).show()
-            })
+
+            }
 
         }
 
@@ -211,8 +218,9 @@ class CreateListingActivity : AppCompatActivity() {
         )
         return MultipartBody.Part.createFormData("image", file.name, requestFile)
     }
+
     private fun openGalleryForImage() {
-        val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
         startActivityForResult(gallery, REQUEST_CODE)
     }
 
@@ -223,33 +231,35 @@ class CreateListingActivity : AppCompatActivity() {
             binding.foodDetailsImage.setImageURI(foodImageUri)
         }
 
-//        if (requestCode == AUTOCOMPLETE_REQUEST_CODE) {
-//            if (resultCode == RESULT_OK) {
-//                val place = Autocomplete.getPlaceFromIntent(data)
-//                binding.createListingLocationTextView.text = data.toString()
-//                locationLatLng = place.latLng
-//                Log.i(TAG, "Place: " + place.name + ", " + place.id)
-//            } else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
-//                // TODO: Handle the error.
-//                val status: Status = Autocomplete.getStatusFromIntent(data)
-//                status.getStatusMessage()?.let { Log.i(TAG, it) }
-//            } else if (resultCode == RESULT_CANCELED) {
-//                // The user canceled the operation.
-//            }
-//        }
-
-        if (requestCode === AUTOCOMPLETE_REQUEST_CODE) {
-            if (resultCode === RESULT_OK) {
-                val place: Place = PlacePicker.getPlace(applicationContext, data)
-                val latLngQueriedLocation = place.latLng
-                locationLatLng = place.latLng
-                binding.createListingLocationTextView.setText(place.name)
+        if (requestCode == AUTOCOMPLETE_REQUEST_CODE) {
+            when (resultCode) {
+                Activity.RESULT_OK -> {
+                    data?.let {
+                        val place = Autocomplete.getPlaceFromIntent(data)
+                        binding.createListingLocationTextView.text = place.name
+                        locationLatLng = place.latLng
+                        Log.i(TAG, "Place: ${place.name}, ${place.id}")
+                    }
+                }
+                AutocompleteActivity.RESULT_ERROR -> {
+                    // TODO: Handle the error.
+                    data?.let {
+                        val status = Autocomplete.getStatusFromIntent(data)
+                        Log.i(TAG, status.statusMessage!!)
+                    }
+                }
+                Activity.RESULT_CANCELED -> {
+                    // The user canceled the operation.
+                }
             }
+            return
         }
+        super.onActivityResult(requestCode, resultCode, data)
+
 
     }
 
-    private fun getRealPathFromURI(uri: Uri?): String? {
+    private fun getRealPathFromURI(uri: Uri?): String {
         var path = ""
         if (contentResolver != null) {
             val cursor: Cursor? = contentResolver.query(uri!!, null, null, null, null)
@@ -263,42 +273,22 @@ class CreateListingActivity : AppCompatActivity() {
         return path
     }
 
-//    private fun getLocation() {
-//        /**
-//         * Initialize Places. API Key is located in
-//         * com.smith.lishe.BuildConfig.GOOGLE_MAPS_API_KEY which is ignored by version control
-//         */
-//        if (!Places.isInitialized()) {
-//            Places.initialize(this, GOOGLE_MAPS_API_KEY);
-//        }
-//
-//        // Set the fields to specify which types of place data to return.
-//        // Set the fields to specify which types of place data to return.
-//        val fields = listOf(Place.Field.NAME)
-//
-//        // Start the autocomplete intent.
-//        val intent = Autocomplete.IntentBuilder(
-//            AutocompleteActivityMode.FULLSCREEN, fields
-//        )
-//            .build(this)
-//        startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE)
-//
-//    }
-
-    private fun openPlacePickerView() {
-        val latLngBounds = LatLngBounds(
-            LatLng(-4.47166, 33.97559),
-            LatLng(3.93726, 41.85688)
-        )
-        val builder: PlacePicker.IntentBuilder = PlacePicker.IntentBuilder()
-        builder.setLatLngBounds(latLngBounds)
-        try {
-            startActivityForResult(builder.build(this), AUTOCOMPLETE_REQUEST_CODE)
-        } catch (e: GooglePlayServicesRepairableException) {
-            e.printStackTrace()
-        } catch (e: GooglePlayServicesNotAvailableException) {
-            e.printStackTrace()
+    private fun getLocation() {
+        /**
+         * Initialize Places. API Key is located in
+         * com.smith.lishe.BuildConfig.GOOGLE_MAPS_API_KEY which is ignored by version control
+         */
+        if (!Places.isInitialized()) {
+            Places.initialize(applicationContext, GOOGLE_MAPS_API_KEY)
         }
+
+        val fields = listOf(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG)
+
+        // Start the autocomplete intent.
+        val intent = Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fields)
+            .build(this)
+        startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE)
+
     }
 
 }

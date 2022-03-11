@@ -41,6 +41,12 @@ class UserProfileFragment : Fragment(R.layout.fragment_user_profile) {
             val intent = Intent(context, CreateListingActivity::class.java)
             startActivity(intent)
         }
+
+        binding.userProfileLogoutButton.setOnClickListener {
+            val intent = Intent(context, LoginActivity::class.java)
+            intent.flags = (Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+            startActivity(intent)
+        }
     }
 
     override fun onDestroyView() {

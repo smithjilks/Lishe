@@ -56,31 +56,36 @@ class FoodListingDetailsActivity : AppCompatActivity() {
             mapFragment?.getMapAsync { googleMap ->
                 addPickupMarker(googleMap, foodListing.latitude, foodListing.longitude)
             }
-        })
-
-        viewModel.userDetails.observe(this, Observer {
-            val listingUser = it
-            binding.foodDetailsOwnerNameTextView.text = "${listingUser.firstName} ${listingUser.lastName}"
-            //binding.foodDetailsCallButton.text = listingUser.phone.toString()
-            binding.foodDetailsOwnerRatingTextView.text = getString(R.string.user_rating)
 
 
-            val imgUri = listingUser.imageUrl.toUri().buildUpon().scheme("https").build()
-            binding.foodDetailsOwnerImage.load(imgUri) {
-                crossfade(true)
-                placeholder(R.drawable.ic_loading)
-                error(R.drawable.ic_broken_image)
-            }
+            viewModel.userDetails.observe(this, Observer {
+                val listingUser = it
+                binding.foodDetailsOwnerNameTextView.text = "${listingUser.firstName} ${listingUser.lastName}"
+                binding.foodDetailsOwnerRatingTextView.text = getString(R.string.user_rating)
 
-            binding.foodDetailsCallButton.setOnClickListener {
-                val intent = Intent(Intent.ACTION_CALL)
-                intent.data = Uri.parse("tel:${listingUser.phone}")
-                if (intent.resolveActivity(packageManager) != null) {
-                    startActivity(intent)
+                if (foodListing.status != "available"){
+                    binding.foodDetailsCallButton.text = listingUser.phone.toString()
                 }
-            }
-            progressBar!!.visibility = View.INVISIBLE
+
+                val imgUri = listingUser.imageUrl.toUri().buildUpon().scheme("https").build()
+                binding.foodDetailsOwnerImage.load(imgUri) {
+                    crossfade(true)
+                    placeholder(R.drawable.ic_loading)
+                    error(R.drawable.ic_broken_image)
+                }
+
+                binding.foodDetailsCallButton.setOnClickListener {
+                    val intent = Intent(Intent.ACTION_CALL)
+                    intent.data = Uri.parse("tel:${listingUser.phone}")
+                    if (intent.resolveActivity(packageManager) != null) {
+                        startActivity(intent)
+                    }
+                }
+                progressBar!!.visibility = View.INVISIBLE
+            })
         })
+
+
 
 
 

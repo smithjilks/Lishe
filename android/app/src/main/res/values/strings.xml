@@ -48,4 +48,5 @@
     <string name="error_longer_than_10">Should be longer than 10</string>
     <string name="date_format">%s/%s/%s</string>
     <string name="select_expiration_date">Select Expiration Date</string>
+    <string name="submit">Submit</string>
 </resources>
