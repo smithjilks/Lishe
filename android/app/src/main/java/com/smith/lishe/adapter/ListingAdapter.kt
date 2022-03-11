@@ -55,6 +55,7 @@ class ListingAdapter(private val context: Context,
         holder.button.setOnClickListener {
             val intent = Intent(context, FoodListingDetailsActivity::class.java)
             intent.putExtra(MainActivity.LISTING_ID, item._id)
+            intent.putExtra(MainActivity.LISTING_USER_ID, item.creator)
             context.startActivity(intent)
         }
     }

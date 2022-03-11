@@ -44,7 +44,7 @@ class ListingRemoteDataSource(
             listingAPI.retrofitService.getUserListings(userId)
         }
 
-    suspend fun fetchOneListing(id: String): ListingApiModel =
+    suspend fun fetchOneListing(id: String): ListingModel =
     // Move the execution to an IO-optimized thread since the ApiService
         // doesn't support coroutines and makes synchronous requests.
         withContext(ioDispatcher) {

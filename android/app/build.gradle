@@ -2,6 +2,8 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
+    id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
+    id "dagger.hilt.android.plugin"
 
 }
 
@@ -58,8 +60,22 @@ dependencies {
 
     implementation 'androidx.fragment:fragment-ktx:1.4.1'
 
-    implementation "io.coil-kt:coil:1.1.1"
-    // Lifecycle components
+    // Coil for displaying images from uri
+    implementation 'io.coil-kt:coil:1.1.1'
+
+    // Maps SDK
+    implementation 'com.google.android.gms:play-services-maps:18.0.2'
+
+    // Dagger Hilt for dependency injection to view models
+    implementation 'com.google.dagger:hilt-android:2.38.1'
+    kapt 'com.google.dagger:hilt-android-compiler:2.38.1'
+
+    // Maps Places API
+    implementation 'com.google.android.gms:play-services-places:17.0.0'
 
 
+}
+
+kapt {
+    correctErrorTypes = true
 }

@@ -27,6 +27,8 @@ class LoginActivity : AppCompatActivity() {
     companion object {
         const val USER_TOKEN = "token"
         const val USER_ID = "userId"
+        const val USER_TYPE = "token"
+        const val USER_ACTIVITY = "userId"
     }
 
 

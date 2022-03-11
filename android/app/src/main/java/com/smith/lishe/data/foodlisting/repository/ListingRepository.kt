@@ -15,6 +15,6 @@ class ListingRepository(
     suspend fun fetchUserListings(): List<ListingModel> =
         listingRemoteDataSource.fetchUserListings(id)
 
-    suspend fun fetchOneListing(): List<ListingModel> =
-        listingRemoteDataSource.fetchUserListings(id)
+    suspend fun fetchOneListing(): ListingModel =
+        listingRemoteDataSource.fetchOneListing(id)
 }

@@ -158,7 +158,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:text="@string/my_listings"
-        app:icon="@drawable/ic_arrow_right"
+        app:icon="@drawable/ic_view_list"
         app:iconGravity="end"
         app:layout_constraintTop_toBottomOf="@+id/user_profile_rating_card"
         app:layout_constraintStart_toStartOf="parent"
@@ -173,7 +173,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:text="@string/my_reviews"
-        app:icon="@drawable/ic_arrow_right"
+        app:icon="@drawable/ic_reviews"
         app:iconGravity="end"
         app:layout_constraintTop_toBottomOf="@+id/user_profile_listings_button"
         app:layout_constraintStart_toStartOf="parent"
@@ -188,9 +188,24 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:text="@string/stats"
-        app:icon="@drawable/ic_arrow_right"
+        app:icon="@drawable/ic_graph"
         app:iconGravity="end"
         app:layout_constraintTop_toBottomOf="@+id/user_profile_reviews_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/user_profile_create_listing_button"
+        style="@style/Widget.Lishe.SecondaryButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/create_a_food_listing"
+        app:icon="@drawable/ic_create"
+        app:iconGravity="end"
+        app:layout_constraintTop_toBottomOf="@+id/user_profile_stats_button"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 

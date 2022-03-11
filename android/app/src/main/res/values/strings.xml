@@ -43,4 +43,9 @@
     <string name="error_required">Required Field</string>
     <string name="error_passwords_dont_match">Passwords do not match</string>
     <string name="upload_image">Upload Image</string>
+    <string name="user_rating">"Rating: %s"</string>
+    <string name="error_longer_than_20">Should be longer than 20 characters</string>
+    <string name="error_longer_than_10">Should be longer than 10</string>
+    <string name="date_format">%s/%s/%s</string>
+    <string name="select_expiration_date">Select Expiration Date</string>
 </resources>

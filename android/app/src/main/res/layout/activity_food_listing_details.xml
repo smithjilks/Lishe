@@ -17,6 +17,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <ProgressBar
+        android:id="@+id/food_listing_progress_bar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        app:layout_constraintTop_toBottomOf="@id/food_details"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/food_details_image_card"
         android:layout_width="0dp"
@@ -34,8 +44,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:importantForAccessibility="no"
-            android:scaleType="centerCrop"
-            app:srcCompat="@drawable/burger" />
+            android:scaleType="centerCrop" />
 
     </com.google.android.material.card.MaterialCardView>
 
@@ -64,7 +73,7 @@
                 app:layout_constraintTop_toBottomOf="@id/user_activity_options">
 
                 <ImageView
-                    android:id="@+id/icon_cost_of_service"
+                    android:id="@+id/food_details_owner_image"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:importantForAccessibility="no"
@@ -82,18 +91,32 @@
                     android:id="@+id/food_details_owner_name_text_view"
                     style="@style/Widget.Lishe.TextView"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="8dp"
-                    android:text="@string/jonh_doe" />
+                    android:layout_height="20dp"
+                    android:paddingLeft="8dp"
+                    tools:text="@string/jonh_doe" />
 
                 <TextView
-                    android:id="@+id/food_details_owner_phone_text_view"
-                    style="@style/Widget.Lishe.TextView"
+                    android:id="@+id/food_details_owner_rating_text_view"
+                    style="@style/TextAppearance.MaterialComponents.Caption"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
                     android:padding="8dp"
-                    android:text="@string/palceholder_tel" />
+                    tools:text="@string/user_rating" />
+
+                <Button
+                    android:id="@+id/food_details_call_button"
+                    style="@style/Widget.Lishe.SecondaryButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:text="call user"
+                    android:enabled="false"
+                    app:icon="@drawable/ic_call"
+                    app:iconGravity="end"/>
+
+
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -171,7 +194,7 @@
 
     <fragment
         android:id="@+id/food_details_pickup_map_fragment"
-        android:name="com.google.android.gms.maps.SupportMapFragment"
+        class="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_margin="8dp"

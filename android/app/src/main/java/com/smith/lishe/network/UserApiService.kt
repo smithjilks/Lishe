@@ -1,9 +1,6 @@
 package com.smith.lishe.network
 
-import com.smith.lishe.model.AuthApiModel
-import com.smith.lishe.model.RegisterApiModel
-import com.smith.lishe.model.UserLoginInfo
-import com.smith.lishe.model.UserRegistrationInfo
+import com.smith.lishe.model.*
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.MultipartBody
@@ -15,7 +12,7 @@ import retrofit2.http.*
 import java.io.File
 
 private const val BASE_URL =
-    "https://f17c-197-232-61-238.ngrok.io/api/v1/users/"
+    "https://6b77-197-232-61-251.ngrok.io/api/v1/"
 
 /**
  * Build the Moshi object with Kotlin adapter factory that Retrofit will be using.
@@ -37,16 +34,20 @@ private val retrofit = Retrofit.Builder()
  */
 interface UserApiService {
     /**
-     * Returns an AUTH data and this method can be called from a Coroutine.
+     * Returns an AUTH and Useer data and this method can be called from a Coroutine.
      * The @POST annotation indicates that the "photos" endpoint will be requested with the GET
      * HTTP method
      */
     @Headers("Content-Type: application/json")
-    @POST("login")
+    @GET("users/{id}")
+    suspend fun getUser(@Path("id") id: String): UserDetailsModel
+
+    @Headers("Content-Type: application/json")
+    @POST("users/login")
     suspend fun authUser(@Body userLoginInfo: UserLoginInfo): AuthApiModel
 
     @Multipart
-    @POST("signup")
+    @POST("users/signup")
     suspend fun registerUser(@Part("firstName") firstName: RequestBody,
                              @Part("lastName") lastName: RequestBody,
                              @Part("email") email: RequestBody,

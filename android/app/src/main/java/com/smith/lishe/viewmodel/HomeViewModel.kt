@@ -23,7 +23,7 @@ class HomeViewModel: ViewModel() {
     val listings: LiveData<List<ListingModel>> = _listings
 
     /**
-     * Call getMarsPhotos() on init so we can display status immediately.
+     * Call getListings on init so we can display status immediately.
      */
     init {
         viewModelScope.launch {

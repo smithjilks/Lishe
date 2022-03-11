@@ -1,5 +1,6 @@
 package com.smith.lishe
 
+import android.app.Application
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -12,6 +13,7 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         const val LISTING_ID = "listingId"
+        const val LISTING_USER_ID = "listingUserId"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -11,7 +11,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.*
 
 private const val BASE_URL =
-    "https://f17c-197-232-61-238.ngrok.io/api/v1/"
+    "https://6b77-197-232-61-251.ngrok.io/api/v1/"
 
 /**
  * Build the Moshi object with Kotlin adapter factory that Retrofit will be using.
@@ -42,19 +42,19 @@ interface ListingApiService {
     suspend fun getAllListings(): List<ListingModel>
 
     @Headers("Content-Type: application/json")
-    @GET("listings/<listingId>")
-    suspend fun getListing(@Path("id") id: String): ListingApiModel
+    @GET("listings/{id}")
+    suspend fun getListing(@Path("id") id: String): ListingModel
 
     @Headers("Content-Type: application/json")
-    @GET("listings/user/<listingId>")
+    @GET("listings/user/{id}")
     suspend fun getUserListings(@Path("id") id: String): List<ListingModel>
 
     @Headers("Content-Type: application/json")
-    @PUT("listings/<listingId>")
+    @PUT("listings/{id}")
     suspend fun updateListing(@Path("id") id: String): ListingApiModel
 
     @Headers("Content-Type: application/json")
-    @DELETE("listings/<listingId>")
+    @DELETE("listings/{id}")
     suspend fun deleteListing(@Path("id") id: String): ListingApiModel
 
     @Multipart
