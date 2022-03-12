@@ -5,10 +5,8 @@ import androidx.lifecycle.*
 import com.smith.lishe.MainActivity
 import com.smith.lishe.data.foodlisting.datasource.ListingRemoteDataSource
 import com.smith.lishe.data.foodlisting.repository.ListingRepository
-import com.smith.lishe.data.requests.datasource.RequestsRemoteDataSource
-import com.smith.lishe.data.requests.repository.RequestsRepository
-import com.smith.lishe.data.user.datasource.UserRemoteDataSource
-import com.smith.lishe.data.user.repository.UserDetailsRepository
+import com.smith.lishe.data.users.datasource.UserRemoteDataSource
+import com.smith.lishe.data.users.repository.UserDetailsRepository
 import com.smith.lishe.model.ListingModel
 import com.smith.lishe.model.UserDetailsModel
 import com.smith.lishe.network.ListingApi

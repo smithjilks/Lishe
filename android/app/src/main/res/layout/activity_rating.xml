@@ -59,11 +59,14 @@
 
 
     <Button
-        android:id="@+id/create_listing_button"
+        android:id="@+id/rate_listing_button"
         style="@style/Widget.Lishe.PrimaryButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/submit"
+        android:numStars="5"
+        android:rating="1"
+        android:stepSize="0.5"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

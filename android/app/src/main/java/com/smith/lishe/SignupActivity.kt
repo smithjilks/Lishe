@@ -10,8 +10,8 @@ import android.util.Log
 import android.util.Patterns
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.smith.lishe.data.user.datasource.RegisterRemoteDataSource
-import com.smith.lishe.data.user.repository.RegisterRepository
+import com.smith.lishe.data.users.datasource.RegisterRemoteDataSource
+import com.smith.lishe.data.users.repository.RegisterRepository
 import com.smith.lishe.databinding.ActivitySignupBinding
 import com.smith.lishe.network.UserApi
 import kotlinx.coroutines.Dispatchers

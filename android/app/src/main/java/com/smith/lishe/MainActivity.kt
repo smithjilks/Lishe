@@ -11,6 +11,7 @@ class MainActivity : AppCompatActivity() {
     companion object {
         const val LISTING_ID = "listingId"
         const val LISTING_USER_ID = "listingUserId"
+        const val REQUEST_ID = "listingUserId"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

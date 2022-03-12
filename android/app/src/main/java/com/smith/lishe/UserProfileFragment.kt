@@ -42,6 +42,11 @@ class UserProfileFragment : Fragment(R.layout.fragment_user_profile) {
             startActivity(intent)
         }
 
+        binding.userProfileReviewsButton.setOnClickListener {
+            val intent = Intent(context, RatingActivity::class.java)
+            startActivity(intent)
+        }
+
         binding.userProfileLogoutButton.setOnClickListener {
             val intent = Intent(context, LoginActivity::class.java)
             intent.flags = (Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)

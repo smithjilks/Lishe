@@ -1,10 +1,7 @@
-package com.smith.lishe.data.user.repository
+package com.smith.lishe.data.users.repository
 
-import com.smith.lishe.data.user.datasource.AuthRemoteDataSource
-import com.smith.lishe.data.user.datasource.UserRemoteDataSource
-import com.smith.lishe.model.AuthApiModel
+import com.smith.lishe.data.users.datasource.UserRemoteDataSource
 import com.smith.lishe.model.UserDetailsModel
-import com.smith.lishe.model.UserLoginInfo
 
 class UserDetailsRepository(
     private val userRemoteDataSource: UserRemoteDataSource,

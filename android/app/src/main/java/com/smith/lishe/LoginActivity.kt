@@ -4,12 +4,11 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.Editable
-import android.util.Log
 import android.util.Patterns
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.smith.lishe.data.user.datasource.AuthRemoteDataSource
-import com.smith.lishe.data.user.repository.LoginRepository
+import com.smith.lishe.data.users.datasource.AuthRemoteDataSource
+import com.smith.lishe.data.users.repository.LoginRepository
 import com.smith.lishe.databinding.ActivityLoginBinding
 import com.smith.lishe.model.AuthApiModel
 import com.smith.lishe.model.UserLoginInfo

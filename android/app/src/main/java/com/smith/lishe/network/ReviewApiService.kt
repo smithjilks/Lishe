@@ -1,11 +1,8 @@
 package com.smith.lishe.network
 
-import com.smith.lishe.model.RequestApiModel
 import com.smith.lishe.model.*
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
-import okhttp3.MultipartBody
-import okhttp3.RequestBody
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.*
@@ -29,39 +26,39 @@ private val retrofit = Retrofit.Builder()
     .build()
 
 /**
- * A public interface that exposes the [requests] methods
+ * A public interface that exposes the [reviews] methods
  */
-interface RequestApiService {
+interface ReviewApiService {
     /**
      * Returns an AUTH data and this method can be called from a Coroutine.
      * The @POST annotation indicates that the "photos" endpoint will be requested with the GET
      * HTTP method
      */
     @Headers("Content-Type: application/json")
-    @GET("requests")
-    suspend fun getAllRequests(): List<RequestModel>
+    @GET("reviews")
+    suspend fun getAllReviews(): List<ReviewModel>
 
     @Headers("Content-Type: application/json")
-    @GET("history/{id}")
-    suspend fun getRequest(@Path("id") id: String): RequestModel
+    @GET("reviews/{id}")
+    suspend fun getReview(@Path("id") id: String): ReviewModel
 
     @Headers("Content-Type: application/json")
-    @GET("requests/user/{id}")
-    suspend fun getUserRequests(@Path("id") id: String): List<RequestModel>
+    @GET("reviews/user/{id}")
+    suspend fun getUserReviews(@Path("id") id: String): List<ReviewModel>
 
     @Headers("Content-Type: application/json")
-    @PUT("history/{id}")
-    suspend fun updateRequest(@Body updateInfo: RequestDetailsModel): RequestApiModel
+    @PUT("reviews/{id}")
+    suspend fun updateReview(@Body updateInfo: ReviewDetailsModel): ReviewApiModel
 
     @Headers("Content-Type: application/json")
-    @DELETE("history/{id}")
-    suspend fun deleteRequest(@Path("id") id: String): RequestApiModel
+    @DELETE("reviews/{id}")
+    suspend fun deleteReview(@Path("id") id: String): ReviewApiModel
 
-    @POST("history")
-    suspend fun createNewRequest(@Body requestInfo: RequestDetailsModel): RequestApiModel
+    @POST("reviews")
+    suspend fun createNewReview(@Body reviewInfo: ReviewDetailsModel): ReviewApiModel
 }
 
 
-object RequestApi {
-    val retrofitService: RequestApiService = retrofit.create(RequestApiService::class.java)
+object ReviewApi {
+    val retrofitService: ReviewApiService = retrofit.create(ReviewApiService::class.java)
 }

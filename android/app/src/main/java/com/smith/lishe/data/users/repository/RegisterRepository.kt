@@ -1,8 +1,7 @@
-package com.smith.lishe.data.user.repository
+package com.smith.lishe.data.users.repository
 
-import com.smith.lishe.data.user.datasource.RegisterRemoteDataSource
+import com.smith.lishe.data.users.datasource.RegisterRemoteDataSource
 import com.smith.lishe.model.RegisterApiModel
-import com.smith.lishe.model.UserRegistrationInfo
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 
