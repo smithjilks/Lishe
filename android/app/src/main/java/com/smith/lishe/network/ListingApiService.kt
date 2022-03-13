@@ -5,18 +5,21 @@ import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
+import okhttp3.Protocol
 import okhttp3.RequestBody
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.*
+import java.util.*
 import java.util.concurrent.TimeUnit
 
 
 private const val BASE_URL =
-    "https://6b77-197-232-61-251.ngrok.io/api/v1/"
+    "https://708a-102-217-64-31.ngrok.io/api/v1/"
 
 val okHttpClient = OkHttpClient.Builder()
     .readTimeout(60, TimeUnit.SECONDS)
+    .protocols(listOf(Protocol.HTTP_1_1))
     .connectTimeout(60, TimeUnit.SECONDS)
     .build()
 

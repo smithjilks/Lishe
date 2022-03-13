@@ -7,8 +7,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import com.smith.lishe.databinding.FragmentHistoryBinding
 import com.smith.lishe.databinding.FragmentUserProfileBinding
 
 class UserProfileFragment : Fragment(R.layout.fragment_user_profile) {
@@ -39,11 +37,6 @@ class UserProfileFragment : Fragment(R.layout.fragment_user_profile) {
 
         binding.userProfileCreateListingButton.setOnClickListener {
             val intent = Intent(context, CreateListingActivity::class.java)
-            startActivity(intent)
-        }
-
-        binding.userProfileReviewsButton.setOnClickListener {
-            val intent = Intent(context, RatingActivity::class.java)
             startActivity(intent)
         }
 

@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
                     selectedFragment = HomeFragment()
                 }
                 R.id.menu_history -> {
-                    selectedFragment = HistoryFragment()
+                    selectedFragment = RequestsFragment()
                 }
                 R.id.menu_profile -> {
                     selectedFragment = UserProfileFragment()

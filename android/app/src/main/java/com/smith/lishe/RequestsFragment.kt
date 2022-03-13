@@ -2,27 +2,25 @@ package com.smith.lishe
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.smith.lishe.adapter.ListingAdapter
-import com.smith.lishe.databinding.FragmentHomeBinding
-import com.smith.lishe.viewmodel.HomeViewModel
+import com.smith.lishe.adapter.RequestsAdapter
+import com.smith.lishe.databinding.FragmentRequestsBinding
+import com.smith.lishe.viewmodel.RequestsViewModel
 
-class HomeFragment : Fragment(R.layout.fragment_home) {
-    private val viewModel: HomeViewModel by viewModels()
+class RequestsFragment : Fragment(R.layout.fragment_requests) {
+    private val viewModel: RequestsViewModel by viewModels()
 
-    private var _binding: FragmentHomeBinding? = null
+    private var _binding: FragmentRequestsBinding? = null
     private var progressBar: ProgressBar? = null
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
 
     private lateinit var recyclerView: RecyclerView
@@ -32,27 +30,28 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        _binding = FragmentRequestsBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        progressBar = binding.homeProgressBar
+        progressBar = binding.requestsProgressBar
         progressBar!!.visibility = View.VISIBLE
-        recyclerView = binding.homeRecyclerView
+        recyclerView = binding.requestsRecyclerView
         // Sets the LayoutManager of the recyclerview
         recyclerView.layoutManager = LinearLayoutManager(context)
-        viewModel.listings.observe(viewLifecycleOwner, Observer {
-            recyclerView.adapter = context?.let { it1 -> ListingAdapter(it1, it) }
+        viewModel.requests.observe(viewLifecycleOwner, Observer {
+            Log.d("Requests ViewModel", it.toString())
+            recyclerView.adapter = context?.let { it1 ->
+                RequestsAdapter(it1, it)
+            }
             progressBar!!.visibility = View.INVISIBLE
         })
 
     }
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
 
     }
-
 }

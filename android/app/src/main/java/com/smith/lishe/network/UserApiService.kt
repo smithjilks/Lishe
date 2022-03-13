@@ -12,7 +12,7 @@ import retrofit2.http.*
 import java.io.File
 
 private const val BASE_URL =
-    "https://6b77-197-232-61-251.ngrok.io/api/v1/"
+    "https://708a-102-217-64-31.ngrok.io/api/v1/"
 
 /**
  * Build the Moshi object with Kotlin adapter factory that Retrofit will be using.

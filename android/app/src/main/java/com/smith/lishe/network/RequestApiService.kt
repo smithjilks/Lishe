@@ -11,7 +11,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.*
 
 private const val BASE_URL =
-    "https://6b77-197-232-61-251.ngrok.io/api/v1/"
+    "https://708a-102-217-64-31.ngrok.io/api/v1/"
 
 /**
  * Build the Moshi object with Kotlin adapter factory that Retrofit will be using.
@@ -38,7 +38,7 @@ interface RequestApiService {
      * HTTP method
      */
     @Headers("Content-Type: application/json")
-    @GET("requests")
+    @GET("history")
     suspend fun getAllRequests(): List<RequestModel>
 
     @Headers("Content-Type: application/json")
@@ -46,7 +46,7 @@ interface RequestApiService {
     suspend fun getRequest(@Path("id") id: String): RequestModel
 
     @Headers("Content-Type: application/json")
-    @GET("requests/user/{id}")
+    @GET("history/user/{id}")
     suspend fun getUserRequests(@Path("id") id: String): List<RequestModel>
 
     @Headers("Content-Type: application/json")

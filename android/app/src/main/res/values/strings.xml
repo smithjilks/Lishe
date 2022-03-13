@@ -49,4 +49,5 @@
     <string name="date_format">%s/%s/%s</string>
     <string name="select_expiration_date">Select Expiration Date</string>
     <string name="submit">Submit</string>
+    <string name="map_id">8a8ed0ae145cfff4</string>
 </resources>

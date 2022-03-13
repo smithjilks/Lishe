@@ -18,11 +18,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Lishe">
         <activity
+            android:name=".FoodRequestDetailsActivity"
+            android:exported="false" />
+        <activity
             android:name=".RatingActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
-            android:exported="false"></activity>
+            android:exported="false" />
         <activity
             android:name=".FoodListingDetailsActivity"
             android:exported="false" />
