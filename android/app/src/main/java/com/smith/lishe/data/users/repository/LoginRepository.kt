@@ -8,7 +8,7 @@ class LoginRepository(
     private val authRemoteDataSource: AuthRemoteDataSource,
     private val body: UserLoginInfo
 ) {
-    suspend fun fetchAuthData(): AuthApiModel =
-        authRemoteDataSource.fetchAuthData(body)
+    suspend fun authUser(): AuthApiModel =
+        authRemoteDataSource.authenticateUser(body)
 }
 

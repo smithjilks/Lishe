@@ -26,8 +26,7 @@ class LoginActivity : AppCompatActivity() {
     companion object {
         const val USER_TOKEN = "token"
         const val USER_ID = "userId"
-        const val USER_TYPE = "token"
-        const val USER_ACTIVITY = "userId"
+        const val USER_TYPE = "userType"
     }
 
 
@@ -75,7 +74,7 @@ class LoginActivity : AppCompatActivity() {
             val response = LoginRepository(
                 AuthRemoteDataSource(UserApi, Dispatchers.IO),
                 userLoginInfo
-            ).fetchAuthData()
+            ).authUser()
 
             saveUser(response)
             val intent = Intent(this, MainActivity::class.java)
@@ -100,6 +99,7 @@ class LoginActivity : AppCompatActivity() {
         val preferencesEditor: SharedPreferences.Editor = userPreferences.edit()
         preferencesEditor.putString(LoginActivity.USER_ID, user.userId)
         preferencesEditor.putString(LoginActivity.USER_TOKEN, user.token)
+        preferencesEditor.putString(LoginActivity.USER_TYPE, user.userType)
         preferencesEditor.apply()
 
     }

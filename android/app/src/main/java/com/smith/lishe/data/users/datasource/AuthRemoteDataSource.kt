@@ -14,7 +14,7 @@ class AuthRemoteDataSource(
      * Fetches the latest news from the network and returns the result.
      * This executes on an IO-optimized thread pool, the function is main-safe.
      */
-    suspend fun fetchAuthData(body: UserLoginInfo): AuthApiModel =
+    suspend fun authenticateUser(body: UserLoginInfo): AuthApiModel =
     // Move the execution to an IO-optimized thread since the ApiService
         // doesn't support coroutines and makes synchronous requests.
         withContext(ioDispatcher) {

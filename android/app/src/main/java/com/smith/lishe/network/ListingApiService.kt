@@ -1,5 +1,6 @@
 package com.smith.lishe.network
 
+import com.smith.lishe.MainActivity
 import com.smith.lishe.model.*
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -15,7 +16,7 @@ import java.util.concurrent.TimeUnit
 
 
 private const val BASE_URL =
-    "https://708a-102-217-64-31.ngrok.io/api/v1/"
+    "https://2b39-197-232-61-236.ngrok.io/api/v1/"
 
 val okHttpClient = OkHttpClient.Builder()
     .readTimeout(60, TimeUnit.SECONDS)
@@ -35,7 +36,7 @@ private val moshi = Moshi.Builder()
  */
 private val retrofit = Retrofit.Builder()
     .addConverterFactory(MoshiConverterFactory.create(moshi))
-    .baseUrl(BASE_URL)
+    .baseUrl(MainActivity.BASE_URL)
     .build()
 
 /**

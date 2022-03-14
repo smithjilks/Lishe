@@ -35,15 +35,7 @@ class RequestsRemoteDataSource(
             requestApi.retrofitService.getRequest(id)
         }
 
-    suspend fun updateRequest(requestUpdateDetails: RequestDetailsModel): RequestApiModel =
-        withContext(ioDispatcher) {
-            requestApi.retrofitService.updateRequest(requestUpdateDetails)
-        }
 
-    suspend fun deleteRequest(id: String): RequestApiModel =
-        withContext(ioDispatcher) {
-            requestApi.retrofitService.deleteRequest(id)
-        }
 
 
 }

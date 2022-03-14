@@ -17,7 +17,7 @@ class RegisterRepository(
     private val userType: RequestBody,
     private val profilePhoto: MultipartBody.Part
 ) {
-    suspend fun fetchRegisterData(): RegisterApiModel =
-        registerRemoteDataSource.fetchRegistrationData(firstName, lastName, email, phone, password, organisation, organisationName, userType, profilePhoto)
+    suspend fun registerUser(): RegisterApiModel =
+        registerRemoteDataSource.registerNewUser(firstName, lastName, email, phone, password, organisation, organisationName, userType, profilePhoto)
 }
 

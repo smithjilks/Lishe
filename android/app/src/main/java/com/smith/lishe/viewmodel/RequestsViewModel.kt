@@ -27,7 +27,6 @@ class RequestsViewModel : ViewModel() {
         viewModelScope.launch {
             try {
                 _requests.postValue(RequestsRepository(RequestsRemoteDataSource(RequestApi, Dispatchers.IO), "").fetchAllRequests())
-                _requests.value?.get(0)?.let { Log.d("Requests ViewModel", it.toString()) }
             } catch (e: Exception) {
                 Log.e("Requests ViewModel", e.toString())
             }

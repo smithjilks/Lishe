@@ -1,5 +1,6 @@
 package com.smith.lishe.network
 
+import com.smith.lishe.MainActivity
 import com.smith.lishe.model.RequestApiModel
 import com.smith.lishe.model.*
 import com.squareup.moshi.Moshi
@@ -11,7 +12,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.*
 
 private const val BASE_URL =
-    "https://708a-102-217-64-31.ngrok.io/api/v1/"
+    "https://2d4e-197-232-61-236.ngrok.io/api/v1/"
 
 /**
  * Build the Moshi object with Kotlin adapter factory that Retrofit will be using.
@@ -25,7 +26,7 @@ private val moshi = Moshi.Builder()
  */
 private val retrofit = Retrofit.Builder()
     .addConverterFactory(MoshiConverterFactory.create(moshi))
-    .baseUrl(BASE_URL)
+    .baseUrl(MainActivity.BASE_URL)
     .build()
 
 /**
@@ -49,9 +50,13 @@ interface RequestApiService {
     @GET("history/user/{id}")
     suspend fun getUserRequests(@Path("id") id: String): List<RequestModel>
 
-    @Headers("Content-Type: application/json")
+    @Multipart
     @PUT("history/{id}")
-    suspend fun updateRequest(@Body updateInfo: RequestDetailsModel): RequestApiModel
+    suspend fun updateRequest(
+        @Header("authorization") token: String,
+        @Part("status") status: RequestBody,
+        @Path("id") id: String
+    ): RequestApiModel
 
     @Headers("Content-Type: application/json")
     @DELETE("history/{id}")

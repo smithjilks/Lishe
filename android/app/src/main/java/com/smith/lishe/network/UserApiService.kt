@@ -1,5 +1,6 @@
 package com.smith.lishe.network
 
+import com.smith.lishe.MainActivity
 import com.smith.lishe.model.*
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -11,8 +12,8 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.*
 import java.io.File
 
-private const val BASE_URL =
-    "https://708a-102-217-64-31.ngrok.io/api/v1/"
+//private const val BASE_URL =
+//    "https://2d4e-197-232-61-236.ngrok.io/api/v1/"
 
 /**
  * Build the Moshi object with Kotlin adapter factory that Retrofit will be using.
@@ -26,7 +27,7 @@ private val moshi = Moshi.Builder()
  */
 private val retrofit = Retrofit.Builder()
     .addConverterFactory(MoshiConverterFactory.create(moshi))
-    .baseUrl(BASE_URL)
+    .baseUrl(MainActivity.BASE_URL)
     .build()
 
 /**

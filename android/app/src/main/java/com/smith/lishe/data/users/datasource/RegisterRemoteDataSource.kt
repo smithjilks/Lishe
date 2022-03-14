@@ -15,7 +15,7 @@ class RegisterRemoteDataSource(
      * Fetches the latest news from the network and returns the result.
      * This executes on an IO-optimized thread pool, the function is main-safe.
      */
-    suspend fun fetchRegistrationData(firstName: RequestBody,
+    suspend fun registerNewUser(firstName: RequestBody,
                                       lastName: RequestBody,
                                       email: RequestBody,
                                       phone: RequestBody,

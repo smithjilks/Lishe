@@ -50,4 +50,6 @@
     <string name="select_expiration_date">Select Expiration Date</string>
     <string name="submit">Submit</string>
     <string name="map_id">8a8ed0ae145cfff4</string>
+    <string name="call_user">call user</string>
+    <string name="log_pickup">Log pickup</string>
 </resources>

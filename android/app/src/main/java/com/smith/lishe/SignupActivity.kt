@@ -1,6 +1,8 @@
 package com.smith.lishe
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.database.Cursor
 import android.net.Uri
 import android.os.Bundle
@@ -10,6 +12,8 @@ import android.util.Log
 import android.util.Patterns
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.smith.lishe.data.users.datasource.RegisterRemoteDataSource
 import com.smith.lishe.data.users.repository.RegisterRepository
 import com.smith.lishe.databinding.ActivitySignupBinding
@@ -34,6 +38,8 @@ class SignupActivity : AppCompatActivity() {
         binding = ActivitySignupBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        checkPermission()
+
         var isOrganisation = false
         binding.optionIndividual.setOnCheckedChangeListener { compoundButton, b ->
             isOrganisation = !isOrganisation
@@ -54,8 +60,8 @@ class SignupActivity : AppCompatActivity() {
 
                     val organisationName = RequestBody.create( MediaType.parse("multipart/form-data"), binding.signupOrganisationNameEditText.text.toString())
                     val userType = RequestBody.create( MediaType.parse("multipart/form-data"), when (binding.userActivityOptions.checkedRadioButtonId) {
-                        R.id.option_collect -> "collecting"
-                        else -> "listing"
+                        R.id.option_collect -> "collector"
+                        else -> "lister"
                     }.toString())
 
 
@@ -107,7 +113,7 @@ class SignupActivity : AppCompatActivity() {
                 organisationName,
                 userType,
                 imageFile
-            ).fetchRegisterData()
+            ).registerUser()
 
             runOnUiThread(java.lang.Runnable {
                 Toast.makeText(
@@ -226,5 +232,21 @@ class SignupActivity : AppCompatActivity() {
             }
         }
         return path
+    }
+
+    private fun checkPermission() {
+        if (ContextCompat.checkSelfPermission(
+                applicationContext,
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(
+                    Manifest.permission.READ_EXTERNAL_STORAGE
+                ),
+                125
+            )
+        }
     }
 }

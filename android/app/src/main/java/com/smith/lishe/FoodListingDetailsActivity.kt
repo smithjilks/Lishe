@@ -70,7 +70,7 @@ class FoodListingDetailsActivity : AppCompatActivity() {
                 binding.foodDetailsOwnerNameTextView.text = "${listingUser.firstName} ${listingUser.lastName}"
                 binding.foodDetailsOwnerRatingTextView.text = getString(R.string.user_rating)
 
-                if (foodListing.status != "available"){
+                if (foodListing.status != "available") {
                     binding.foodDetailsCallButton.text = listingUser.phone.toString()
                 }
 
@@ -102,10 +102,10 @@ class FoodListingDetailsActivity : AppCompatActivity() {
     }
 
     private fun addPickupMarker(googleMap: GoogleMap, lat: Double, lng: Double) {
-        val userActivity =  sharedPreferences!!.getString(LoginActivity.USER_ACTIVITY, "collecting")
+        val userActivity =  sharedPreferences!!.getString(LoginActivity.USER_TYPE, "collector")
         val foodPickupLocation = LatLng(lat, lng)
         val markerIconResource = when (userActivity) {
-            "listing" -> R.drawable.ic_food
+            "lister" -> R.drawable.ic_food
             else -> R.drawable.ic_collector_marker
         }
         val markerIcon: BitmapDescriptor by lazy {
