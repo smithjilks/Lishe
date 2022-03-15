@@ -52,4 +52,8 @@
     <string name="map_id">8a8ed0ae145cfff4</string>
     <string name="call_user">call user</string>
     <string name="log_pickup">Log pickup</string>
+    <string name="edit_listing">Edit Listing</string>
+    <string name="user_name">%s %s</string>
+
+
 </resources>

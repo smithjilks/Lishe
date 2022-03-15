@@ -29,10 +29,10 @@ import okhttp3.RequestBody
 import javax.inject.Inject
 
 @HiltViewModel
-class RequestDetailsViewModel  @Inject constructor(
+class RequestDetailsViewModel @Inject constructor(
     application: Application,
     savedStateHandle: SavedStateHandle
-): AndroidViewModel(Application()) {
+) : AndroidViewModel(Application()) {
 
     private var sharedPreferences: SharedPreferences? = null
     private val sharedPrefFile = "com.smith.lishe.user"

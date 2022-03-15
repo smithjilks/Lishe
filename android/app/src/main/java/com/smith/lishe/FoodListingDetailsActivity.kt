@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.ProgressBar
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -48,6 +49,12 @@ class FoodListingDetailsActivity : AppCompatActivity() {
         sharedPreferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE)
 
 
+        val userType =  sharedPreferences!!.getString(LoginActivity.USER_TYPE, "collector")
+        if (userType != "collector") {
+            binding.foodDetailsCallButton.isEnabled = false
+            binding.requestFoodListingButton.text = getString(R.string.edit_listing)
+        }
+
         viewModel.listing.observe(this, Observer {
             val foodListing = it
 
@@ -65,32 +72,6 @@ class FoodListingDetailsActivity : AppCompatActivity() {
                 error(R.drawable.ic_broken_image)
             }
 
-            viewModel.userDetails.observe(this, Observer {
-                val listingUser = it
-                binding.foodDetailsOwnerNameTextView.text = "${listingUser.firstName} ${listingUser.lastName}"
-                binding.foodDetailsOwnerRatingTextView.text = getString(R.string.user_rating)
-
-                if (foodListing.status != "available") {
-                    binding.foodDetailsCallButton.text = listingUser.phone.toString()
-                }
-
-                val imgUri = listingUser.imageUrl.toUri().buildUpon().scheme("https").build()
-                binding.foodDetailsOwnerImage.load(imgUri) {
-                    crossfade(true)
-                    placeholder(R.drawable.ic_loading)
-                    error(R.drawable.ic_broken_image)
-                }
-
-                binding.foodDetailsCallButton.setOnClickListener {
-                    val intent = Intent(Intent.ACTION_CALL)
-                    intent.data = Uri.parse("tel:${listingUser.phone}")
-                    if (intent.resolveActivity(packageManager) != null) {
-                        startActivity(intent)
-                    }
-                }
-                progressBar!!.visibility = View.INVISIBLE
-            })
-
             val mapFragment = supportFragmentManager.findFragmentById(
                 R.id.food_details_pickup_map_fragment
             ) as? SupportMapFragment
@@ -99,15 +80,51 @@ class FoodListingDetailsActivity : AppCompatActivity() {
 
             }
         })
+
+        viewModel.userDetails.observe(this, Observer {
+            val listingUser = it
+            Log.e("User in Listing", listingUser.toString())
+            binding.foodDetailsOwnerNameTextView.text = getString(R.string.user_name, listingUser.firstName ,listingUser.lastName)
+            binding.foodDetailsOwnerRatingTextView.text = getString(R.string.user_rating, listingUser.userRating)
+
+
+            val imgUri = listingUser.imageUrl.toUri().buildUpon().scheme("https").build()
+            binding.foodDetailsOwnerImage.load(imgUri) {
+                crossfade(true)
+                placeholder(R.drawable.ic_loading)
+                error(R.drawable.ic_broken_image)
+            }
+
+            binding.foodDetailsCallButton.setOnClickListener {
+                val intent = Intent(Intent.ACTION_CALL)
+                intent.data = Uri.parse("tel:${listingUser.phone}")
+                if (intent.resolveActivity(packageManager) != null) {
+                    startActivity(intent)
+                }
+            }
+
+            binding.requestFoodListingButton.setOnClickListener {
+                if (userType == "collector")
+                    viewModel.requestListing()
+            }
+            progressBar!!.visibility = View.INVISIBLE
+        })
+
+        viewModel.requestStatus.observe(this, Observer {
+            val status = it
+            if (status) {
+                Toast.makeText(this, "Request success", Toast.LENGTH_LONG).show()
+                onBackPressed()
+            } else {
+                Toast.makeText(this, "Request failed", Toast.LENGTH_LONG).show()
+
+            }
+        })
     }
 
     private fun addPickupMarker(googleMap: GoogleMap, lat: Double, lng: Double) {
-        val userActivity =  sharedPreferences!!.getString(LoginActivity.USER_TYPE, "collector")
         val foodPickupLocation = LatLng(lat, lng)
-        val markerIconResource = when (userActivity) {
-            "lister" -> R.drawable.ic_food
-            else -> R.drawable.ic_collector_marker
-        }
+        val markerIconResource = R.drawable.ic_food
         val markerIcon: BitmapDescriptor by lazy {
             val color = ContextCompat.getColor(this, R.color.green_dark)
             BitmapHelper.vectorToBitmap(this, markerIconResource, color)

@@ -1,5 +1,6 @@
 package com.smith.lishe.data.requests.datasource
 
+import com.google.gson.JsonObject
 import com.smith.lishe.model.*
 import com.smith.lishe.network.RequestApi
 import kotlinx.coroutines.CoroutineDispatcher
@@ -20,9 +21,9 @@ class RequestsRemoteDataSource(
             requestApi.retrofitService.getAllRequests()
         }
 
-    suspend fun createNewRequest(newRequestDetails: RequestDetailsModel): RequestApiModel =
+    suspend fun createNewRequest(token: String, newRequestDetails: RequestDetailsModel): RequestApiModel =
         withContext(ioDispatcher) {
-            requestApi.retrofitService.createNewRequest(newRequestDetails)
+            requestApi.retrofitService.createNewRequest(token, newRequestDetails)
         }
 
     suspend fun fetchUserRequests(userId: String): List<RequestModel> =

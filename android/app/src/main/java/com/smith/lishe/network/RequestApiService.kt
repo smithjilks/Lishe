@@ -1,5 +1,6 @@
 package com.smith.lishe.network
 
+import com.google.gson.JsonObject
 import com.smith.lishe.MainActivity
 import com.smith.lishe.model.RequestApiModel
 import com.smith.lishe.model.*
@@ -63,7 +64,8 @@ interface RequestApiService {
     suspend fun deleteRequest(@Path("id") id: String): RequestApiModel
 
     @POST("history")
-    suspend fun createNewRequest(@Body requestInfo: RequestDetailsModel): RequestApiModel
+    suspend fun createNewRequest(@Header("authorization") token: String,
+                                 @Body requestInfo: RequestDetailsModel): RequestApiModel
 }
 
 

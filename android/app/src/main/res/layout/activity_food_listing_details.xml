@@ -102,6 +102,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
                     android:padding="8dp"
+                    android:textColor="@color/purple_dark"
                     tools:text="@string/user_rating" />
 
                 <Button
@@ -112,7 +113,6 @@
                     android:layout_marginStart="8dp"
                     android:layout_marginEnd="8dp"
                     android:text="call user"
-                    android:enabled="false"
                     app:icon="@drawable/ic_call"
                     app:iconGravity="end"/>
 
