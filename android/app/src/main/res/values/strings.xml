@@ -54,6 +54,9 @@
     <string name="log_pickup">Log pickup</string>
     <string name="edit_listing">Edit Listing</string>
     <string name="user_name">%s %s</string>
+    <string name="personal_details">Personal Details</string>
+    <string name="rating_value">%s</string>
+    <string name="user_phone_number">%s</string>
 
 
 </resources>

@@ -97,7 +97,7 @@ class FoodListingDetailsActivity : AppCompatActivity() {
 
             binding.foodDetailsCallButton.setOnClickListener {
                 val intent = Intent(Intent.ACTION_CALL)
-                intent.data = Uri.parse("tel:${listingUser.phone}")
+                intent.data = Uri.parse("tel:${listingUser.phone.toBigDecimal()}")
                 if (intent.resolveActivity(packageManager) != null) {
                     startActivity(intent)
                 }

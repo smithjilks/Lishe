@@ -48,7 +48,7 @@ class RequestsFragment : Fragment(R.layout.fragment_requests) {
                 RequestsAdapter(it1, it)
             }
 
-            if (recyclerView.adapter == null) {
+            if (recyclerView.adapter?.itemCount == 0) {
                 Toast.makeText(context, "You have no request. Create listings to get requests", Toast.LENGTH_LONG).show()
             }
             progressBar!!.visibility = View.INVISIBLE

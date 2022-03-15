@@ -48,7 +48,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         viewModel.listings.observe(viewLifecycleOwner, Observer {
             recyclerView.adapter = context?.let { it1 -> ListingAdapter(it1, it) }
             progressBar!!.visibility = View.INVISIBLE
-            if (recyclerView.size == 0) {
+            if (recyclerView.adapter == null) {
                 Toast.makeText(context, "You have no listings", Toast.LENGTH_LONG).show()
             }
         })
