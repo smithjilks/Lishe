@@ -1,18 +1,29 @@
 package com.smith.lishe.viewmodel
 
+import android.app.Application
+import android.content.Context
+import android.content.SharedPreferences
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
+import com.smith.lishe.LoginActivity
 import com.smith.lishe.data.requests.datasource.RequestsRemoteDataSource
 import com.smith.lishe.data.requests.repository.RequestsRepository
 import com.smith.lishe.model.RequestModel
 import com.smith.lishe.network.RequestApi
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class RequestsViewModel : ViewModel() {
+@HiltViewModel
+class RequestsViewModel @Inject constructor(
+    application: Application,
+    savedStateHandle: SavedStateHandle
+) : AndroidViewModel(Application()) {
+
+    private var sharedPreferences: SharedPreferences? = null
+    private val sharedPrefFile = "com.smith.lishe.user"
+
     // Internally, we use a MutableLiveData, because we will be updating the List of MarsPhoto
     // with new values
     private val _requests = MutableLiveData<List<RequestModel>>()
@@ -24,9 +35,34 @@ class RequestsViewModel : ViewModel() {
      * Call getRequests on init so we can display status immediately.
      */
     init {
+        sharedPreferences = application.applicationContext.getSharedPreferences(
+            sharedPrefFile,
+            Context.MODE_PRIVATE
+        )
+        val userId = sharedPreferences!!.getString(LoginActivity.USER_ID, "")
+        val userType = sharedPreferences!!.getString(LoginActivity.USER_TYPE, "")
+
         viewModelScope.launch {
             try {
-                _requests.postValue(RequestsRepository(RequestsRemoteDataSource(RequestApi, Dispatchers.IO), "").fetchAllRequests())
+                if (userType == "collector") {
+                    _requests.postValue(
+                        RequestsRepository(
+                            RequestsRemoteDataSource(
+                                RequestApi,
+                                Dispatchers.IO
+                            ), userId!!
+                        ).fetchUserRequests()
+                    )
+                } else {
+                    _requests.postValue(
+                        RequestsRepository(
+                            RequestsRemoteDataSource(
+                                RequestApi,
+                                Dispatchers.IO
+                            ), userId!!
+                        ).fetchAllRequests().filter { it.listingDetails[0].creator == userId }
+                    )
+                }
             } catch (e: Exception) {
                 Log.e("Requests ViewModel", e.toString())
             }
@@ -42,7 +78,12 @@ class RequestsViewModel : ViewModel() {
         val data: MutableList<RequestModel> = mutableListOf()
         viewModelScope.launch {
             try {
-                data.addAll(RequestsRepository(RequestsRemoteDataSource(RequestApi, Dispatchers.IO), "").fetchAllRequests())
+                data.addAll(
+                    RequestsRepository(
+                        RequestsRemoteDataSource(RequestApi, Dispatchers.IO),
+                        ""
+                    ).fetchAllRequests()
+                )
 
             } catch (e: Exception) {
 

@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
+import android.widget.Toast
+import androidx.core.view.size
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.smith.lishe.adapter.ListingAdapter
 import com.smith.lishe.databinding.FragmentHomeBinding
 import com.smith.lishe.viewmodel.HomeViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
 class HomeFragment : Fragment(R.layout.fragment_home) {
     private val viewModel: HomeViewModel by viewModels()
@@ -45,6 +48,9 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         viewModel.listings.observe(viewLifecycleOwner, Observer {
             recyclerView.adapter = context?.let { it1 -> ListingAdapter(it1, it) }
             progressBar!!.visibility = View.INVISIBLE
+            if (recyclerView.size == 0) {
+                Toast.makeText(context, "You have no listings", Toast.LENGTH_LONG).show()
+            }
         })
 
     }

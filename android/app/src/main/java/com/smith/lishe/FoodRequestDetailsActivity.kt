@@ -1,15 +1,19 @@
 package com.smith.lishe
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
+import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import coil.load
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -36,11 +40,30 @@ class FoodRequestDetailsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        var sharedPreferences: SharedPreferences? = null
+        val sharedPrefFile = "com.smith.lishe.user"
+
         binding = ActivityFoodRequestDetailsBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        sharedPreferences = application.applicationContext.getSharedPreferences(
+            sharedPrefFile,
+            Context.MODE_PRIVATE
+        )
+
+        val userType =  sharedPreferences.getString(LoginActivity.USER_TYPE, "")
+        Log.d("User Type Food req Acrivity", userType.toString())
 
         progressBar = binding.foodRequestProgressBar
         progressBar!!.visibility = View.VISIBLE
+
+
+        binding.requestRequestLogPickupButton.isVisible = false
+        binding.cancelRequestButton.isVisible = false
+
+        if (userType == "lister") {
+            binding.requestRequestLogPickupButton.isVisible = true
+            binding.cancelRequestButton.isVisible = true
+        }
 
         viewModel.request.observe(this, Observer {
             val foodRequest = it

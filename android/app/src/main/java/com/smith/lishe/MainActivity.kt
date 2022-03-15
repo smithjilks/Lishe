@@ -18,8 +18,9 @@ import com.pubnub.api.enums.PNLogVerbosity
 import com.smith.lishe.databinding.ActivityMainBinding
 import com.smith.lishe.viewmodel.MainActivityViewModel
 import com.smith.lishe.viewmodel.RequestDetailsViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private val viewModel: MainActivityViewModel by viewModels()
 

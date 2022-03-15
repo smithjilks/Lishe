@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
+import android.widget.Toast
+import androidx.core.view.size
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -44,6 +46,10 @@ class RequestsFragment : Fragment(R.layout.fragment_requests) {
             Log.d("Requests ViewModel", it.toString())
             recyclerView.adapter = context?.let { it1 ->
                 RequestsAdapter(it1, it)
+            }
+
+            if (recyclerView.adapter == null) {
+                Toast.makeText(context, "You have no request. Create listings to get requests", Toast.LENGTH_LONG).show()
             }
             progressBar!!.visibility = View.INVISIBLE
         })
