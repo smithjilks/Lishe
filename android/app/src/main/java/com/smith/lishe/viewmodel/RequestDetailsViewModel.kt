@@ -14,10 +14,7 @@ import com.smith.lishe.data.requests.datasource.RequestsRemoteDataSource
 import com.smith.lishe.data.requests.repository.RequestsRepository
 import com.smith.lishe.data.users.datasource.UserRemoteDataSource
 import com.smith.lishe.data.users.repository.UserDetailsRepository
-import com.smith.lishe.model.ListingModel
-import com.smith.lishe.model.RequestApiModel
-import com.smith.lishe.model.RequestModel
-import com.smith.lishe.model.UserDetailsModel
+import com.smith.lishe.model.*
 import com.smith.lishe.network.ListingApi
 import com.smith.lishe.network.RequestApi
 import com.smith.lishe.network.UserApi
@@ -114,7 +111,7 @@ class RequestDetailsViewModel @Inject constructor(
     }
 
 
-    fun updateRequest(status: RequestBody) {
+    fun updateRequest(status: UpdateRequestModel) {
         Log.e("Request Details ViewModel", token!!)
         viewModelScope.launch {
             try {

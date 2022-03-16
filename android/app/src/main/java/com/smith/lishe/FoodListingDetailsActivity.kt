@@ -49,7 +49,7 @@ class FoodListingDetailsActivity : AppCompatActivity() {
         sharedPreferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE)
 
 
-        val userType =  sharedPreferences!!.getString(LoginActivity.USER_TYPE, "collector")
+        val userType = sharedPreferences!!.getString(LoginActivity.USER_TYPE, "collector")
         if (userType != "collector") {
             binding.foodDetailsCallButton.isEnabled = false
             binding.requestFoodListingButton.text = getString(R.string.edit_listing)
@@ -84,8 +84,10 @@ class FoodListingDetailsActivity : AppCompatActivity() {
         viewModel.userDetails.observe(this, Observer {
             val listingUser = it
             Log.e("User in Listing", listingUser.toString())
-            binding.foodDetailsOwnerNameTextView.text = getString(R.string.user_name, listingUser.firstName ,listingUser.lastName)
-            binding.foodDetailsOwnerRatingTextView.text = getString(R.string.user_rating, listingUser.userRating)
+            binding.foodDetailsOwnerNameTextView.text =
+                getString(R.string.user_name, listingUser.firstName, listingUser.lastName)
+            binding.foodDetailsOwnerRatingTextView.text =
+                getString(R.string.user_rating, (listingUser.userRating.toFloat() / 5).toString())
 
 
             val imgUri = listingUser.imageUrl.toUri().buildUpon().scheme("https").build()

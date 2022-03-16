@@ -56,7 +56,9 @@ interface ReviewApiService {
     suspend fun deleteReview(@Path("id") id: String): ReviewApiModel
 
     @POST("reviews")
-    suspend fun createNewReview(@Body reviewInfo: ReviewDetailsModel): ReviewApiModel
+    suspend fun createNewReview(
+        @Header("authorization") token: String,
+        @Body reviewInfo: ReviewDetailsModel): ReviewApiModel
 }
 
 

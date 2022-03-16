@@ -16,6 +16,7 @@ import coil.load
 import com.smith.lishe.FoodRequestDetailsActivity
 import com.smith.lishe.MainActivity
 import com.smith.lishe.R
+import com.smith.lishe.RatingActivity
 import com.smith.lishe.databinding.FoodRequestItemBinding
 import com.smith.lishe.model.RequestModel
 
@@ -54,7 +55,7 @@ class RequestsAdapter(
         val statusIcon = when (item.status) {
             "confirmed" -> R.drawable.ic_food_confirmed
             "cancelled" -> R.drawable.ic_request_cancelled
-            "completed" -> R.drawable.ic_complete
+            "collected" -> R.drawable.ic_complete
             else -> R.drawable.ic_pending
         }
 
@@ -67,11 +68,25 @@ class RequestsAdapter(
         }
 
         holder.button.setOnClickListener {
-            val intent = Intent(context, FoodRequestDetailsActivity::class.java)
-            intent.putExtra(MainActivity.REQUEST_ID, item._id)
-            intent.putExtra(MainActivity.LISTING_USER_ID, item.listingDetails[0].creator)
-            intent.putExtra(MainActivity.REQUESTING_USER_ID, item.listingDetails[0].creator)
-            context.startActivity(intent)
+            when {
+                item.status == "collected" -> {
+                    val intent = Intent(context, RatingActivity::class.java)
+                    intent.putExtra(MainActivity.REQUEST_ID, item._id)
+                    intent.putExtra(MainActivity.LISTING_USER_ID, item.listingDetails[0].creator)
+                    context.startActivity(intent)
+
+                }
+                item.status != "cancelled" -> {
+                    val intent = Intent(context, FoodRequestDetailsActivity::class.java)
+                    intent.putExtra(MainActivity.REQUEST_ID, item._id)
+                    intent.putExtra(MainActivity.LISTING_USER_ID, item.listingDetails[0].creator)
+                    intent.putExtra(MainActivity.REQUESTING_USER_ID, item.listingDetails[0].creator)
+                    context.startActivity(intent)
+                }
+                else -> {
+                    Toast.makeText(context, "Request ${item.status}", Toast.LENGTH_LONG).show()
+                }
+            }
 
         }
     }

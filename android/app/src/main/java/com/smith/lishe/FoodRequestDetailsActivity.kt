@@ -24,6 +24,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.smith.lishe.databinding.ActivityFoodListingDetailsBinding
 import com.smith.lishe.databinding.ActivityFoodRequestDetailsBinding
+import com.smith.lishe.model.UpdateRequestModel
 import com.smith.lishe.utils.BitmapHelper
 import com.smith.lishe.viewmodel.FoodListingDetailsViewModel
 import com.smith.lishe.viewmodel.RequestDetailsViewModel
@@ -50,7 +51,7 @@ class FoodRequestDetailsActivity : AppCompatActivity() {
             Context.MODE_PRIVATE
         )
 
-        val userType =  sharedPreferences.getString(LoginActivity.USER_TYPE, "")
+        val userType = sharedPreferences.getString(LoginActivity.USER_TYPE, "")
         Log.d("User Type Food req Acrivity", userType.toString())
 
         progressBar = binding.foodRequestProgressBar
@@ -98,12 +99,26 @@ class FoodRequestDetailsActivity : AppCompatActivity() {
             })
 
             binding.requestRequestLogPickupButton.setOnClickListener {
-                if (foodRequest.status == "pending") {
-                    val statusReqBody = RequestBody.create(MediaType.parse("multipart/form-data"), "confirmed")
-                    viewModel.updateRequest(statusReqBody)
+                val statusRequestBody = when (foodRequest.status) {
+                    "pending" -> UpdateRequestModel("confirmed")
+                    "confirmed" -> UpdateRequestModel("collected")
+                    else -> UpdateRequestModel(foodRequest.status)
                 }
-                val statusReqBody = RequestBody.create(MediaType.parse("multipart/form-data"), "collected")
-                viewModel.updateRequest(statusReqBody)
+
+                viewModel.updateRequest(statusRequestBody)
+            }
+
+            binding.cancelRequestButton.setOnClickListener {
+                if (foodRequest.status != "confirmed") {
+                    val statusReqBody = UpdateRequestModel("cancelled")
+                    viewModel.updateRequest(statusReqBody)
+                } else {
+                    Toast.makeText(
+                        this,
+                        "You can't cancel a confirmed request", Toast.LENGTH_LONG
+                    )
+                        .show()
+                }
             }
 
             val mapFragment = supportFragmentManager.findFragmentById(
@@ -146,11 +161,6 @@ class FoodRequestDetailsActivity : AppCompatActivity() {
             }
             Toast.makeText(this, "Operation $toastMessage", Toast.LENGTH_LONG).show()
         })
-
-        binding.cancelRequestButton.setOnClickListener {
-            val statusReqBody = RequestBody.create(MediaType.parse("multipart/form-data"), "confirmed")
-            viewModel.updateRequest(statusReqBody)
-        }
 
 
     }

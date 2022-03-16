@@ -51,11 +51,10 @@ interface RequestApiService {
     @GET("history/user/{id}")
     suspend fun getUserRequests(@Path("id") id: String): List<RequestModel>
 
-    @Multipart
     @PUT("history/{id}")
     suspend fun updateRequest(
         @Header("authorization") token: String,
-        @Part("status") status: RequestBody,
+        @Body status: UpdateRequestModel,
         @Path("id") id: String
     ): RequestApiModel
 

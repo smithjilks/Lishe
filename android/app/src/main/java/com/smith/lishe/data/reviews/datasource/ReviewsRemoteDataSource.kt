@@ -19,9 +19,9 @@ class ReviewsRemoteDataSource(
             reviewApi.retrofitService.getAllReviews()
         }
 
-    suspend fun createNewReview(newReviewDetails: ReviewDetailsModel): ReviewApiModel =
+    suspend fun createNewReview(token: String, newReviewDetails: ReviewDetailsModel): ReviewApiModel =
         withContext(ioDispatcher) {
-            reviewApi.retrofitService.createNewReview(newReviewDetails)
+            reviewApi.retrofitService.createNewReview(token, newReviewDetails)
         }
 
     suspend fun fetchUserReviews(userId: String): List<ReviewModel> =

@@ -30,7 +30,7 @@ class RatingActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         sharedPreferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE)
-        val userId =  sharedPreferences!!.getString(LoginActivity.USER_TYPE, "")
+        val token =  sharedPreferences!!.getString(LoginActivity.USER_TOKEN, "")
 
 
         progressBar = binding.rateListingProgressBar
@@ -38,26 +38,24 @@ class RatingActivity : AppCompatActivity() {
         
         binding.rateListingButton.setOnClickListener {
             progressBar!!.visibility = View.VISIBLE
-            binding.rateListingButton.isEnabled = false
 
             val ownerId = intent.getStringExtra(MainActivity.LISTING_USER_ID)
             val requestId = intent.getStringExtra(MainActivity.REQUEST_ID)
             val ratingDetails = ReviewDetailsModel(
-                userId!!,
                 ownerId!!,
                 requestId!!,
-                binding.rateListingRatingBar.numStars.toString(),
+                binding.rateListingRatingBar.rating,
                 binding.rateListingDescriptionEditText.text.toString()
             )
             GlobalScope.launch {
-                submitReview(ratingDetails)
+                submitReview(token!!, ratingDetails)
             }
         }
     }
 
-    private suspend fun submitReview(ratingDetails: ReviewDetailsModel) {
+    private suspend fun submitReview(token: String, ratingDetails: ReviewDetailsModel) {
         try {
-            val response = ReviewsRemoteDataSource(ReviewApi, Dispatchers.IO).createNewReview(ratingDetails)
+            val response = ReviewsRemoteDataSource(ReviewApi, Dispatchers.IO).createNewReview("Bearer $token", ratingDetails)
 
             runOnUiThread {
                 onBackPressed()
@@ -69,6 +67,7 @@ class RatingActivity : AppCompatActivity() {
             }
 
         } catch (e: Exception) {
+            Log.e("Review Activity", e.toString())
             runOnUiThread {
                 progressBar!!.visibility = View.INVISIBLE
                 binding.rateListingButton.isEnabled = true
