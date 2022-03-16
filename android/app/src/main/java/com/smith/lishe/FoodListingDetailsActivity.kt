@@ -1,11 +1,147 @@
 package com.smith.lishe
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
+import android.content.SharedPreferences
+import android.content.res.Resources
+import android.net.Uri
 import android.os.Bundle
+import android.util.Log
+import android.view.View
+import android.widget.ProgressBar
+import android.widget.Toast
+import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.core.net.toUri
+import androidx.lifecycle.Observer
+import coil.load
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.GoogleMapOptions
+import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.BitmapDescriptor
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MapStyleOptions
+import com.google.android.gms.maps.model.MapStyleOptions.loadRawResourceStyle
+import com.google.android.gms.maps.model.MarkerOptions
+import com.smith.lishe.databinding.ActivityFoodListingDetailsBinding
+import com.smith.lishe.utils.BitmapHelper
+import com.smith.lishe.viewmodel.FoodListingDetailsViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+
+@AndroidEntryPoint
 class FoodListingDetailsActivity : AppCompatActivity() {
+    private val viewModel: FoodListingDetailsViewModel by viewModels()
+
+    private lateinit var binding: ActivityFoodListingDetailsBinding
+    private var progressBar: ProgressBar? = null
+    private var sharedPreferences: SharedPreferences? = null
+    private val sharedPrefFile = "com.smith.lishe.user"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_food_listing_details)
+        binding = ActivityFoodListingDetailsBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        progressBar = binding.foodListingProgressBar
+        progressBar!!.visibility = View.VISIBLE
+
+        sharedPreferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE)
+
+
+        val userType = sharedPreferences!!.getString(LoginActivity.USER_TYPE, "collector")
+        if (userType != "collector") {
+            binding.foodDetailsCallButton.isEnabled = false
+            binding.requestFoodListingButton.text = getString(R.string.edit_listing)
+        }
+
+        viewModel.listing.observe(this, Observer {
+            val foodListing = it
+
+            progressBar!!.visibility = View.INVISIBLE
+
+            binding.foodDetailsFoodNameTextView.text = foodListing.title
+            binding.foodDetailsDescriptionTextView.text = foodListing.description
+            binding.foodDetailsFoodExpirationTextView.text =
+                getString(R.string.expiration_date, foodListing.expiration)
+
+            val imgUri = foodListing.imageUrl.toUri().buildUpon().scheme("https").build()
+            binding.foodDetailsImage.load(imgUri) {
+                crossfade(true)
+                placeholder(R.drawable.ic_loading)
+                error(R.drawable.ic_broken_image)
+            }
+
+            val mapFragment = supportFragmentManager.findFragmentById(
+                R.id.food_details_pickup_map_fragment
+            ) as? SupportMapFragment
+            mapFragment?.getMapAsync { googleMap ->
+                addPickupMarker(googleMap, foodListing.latitude, foodListing.longitude)
+
+            }
+        })
+
+        viewModel.userDetails.observe(this, Observer {
+            val listingUser = it
+            Log.e("User in Listing", listingUser.toString())
+            binding.foodDetailsOwnerNameTextView.text =
+                getString(R.string.user_name, listingUser.firstName, listingUser.lastName)
+            binding.foodDetailsOwnerRatingTextView.text =
+                getString(R.string.user_rating, (listingUser.userRating.toFloat() / 5).toString())
+
+
+            val imgUri = listingUser.imageUrl.toUri().buildUpon().scheme("https").build()
+            binding.foodDetailsOwnerImage.load(imgUri) {
+                crossfade(true)
+                placeholder(R.drawable.ic_loading)
+                error(R.drawable.ic_broken_image)
+            }
+
+            binding.foodDetailsCallButton.setOnClickListener {
+                val intent = Intent(Intent.ACTION_CALL)
+                intent.data = Uri.parse("tel:${listingUser.phone.toBigDecimal()}")
+                if (intent.resolveActivity(packageManager) != null) {
+                    startActivity(intent)
+                }
+            }
+
+            binding.requestFoodListingButton.setOnClickListener {
+                if (userType == "collector")
+                    viewModel.requestListing()
+            }
+            progressBar!!.visibility = View.INVISIBLE
+        })
+
+        viewModel.requestStatus.observe(this, Observer {
+            val status = it
+            if (status) {
+                Toast.makeText(this, "Request success", Toast.LENGTH_LONG).show()
+                onBackPressed()
+            } else {
+                Toast.makeText(this, "Request failed", Toast.LENGTH_LONG).show()
+
+            }
+        })
+    }
+
+    private fun addPickupMarker(googleMap: GoogleMap, lat: Double, lng: Double) {
+        val foodPickupLocation = LatLng(lat, lng)
+        val markerIconResource = R.drawable.ic_food
+        val markerIcon: BitmapDescriptor by lazy {
+            val color = ContextCompat.getColor(this, R.color.green_dark)
+            BitmapHelper.vectorToBitmap(this, markerIconResource, color)
+        }
+
+        googleMap.addMarker(
+            MarkerOptions()
+                .icon(markerIcon)
+                .position(foodPickupLocation)
+        )
+
+        googleMap.moveCamera(CameraUpdateFactory.newLatLng(foodPickupLocation))
+        googleMap.animateCamera(CameraUpdateFactory.zoomIn());
+        //Zoom out to zoom level 10, animating with a duration of 2 seconds.
+        googleMap.animateCamera(CameraUpdateFactory.zoomTo(15f), 2000, null);
+
     }
 }

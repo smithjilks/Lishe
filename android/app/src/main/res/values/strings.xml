@@ -19,7 +19,7 @@
     <string name="create_a_food_listing">Create a Food Listing</string>
     <string name="food_title">Food Title</string>
     <string name="food_description">Food Description</string>
-    <string name="expiration_date">Expiration Date</string>
+    <string name="expiration_date">Expiration Date %s</string>
     <string name="select_location">Select Location</string>
     <string name="select_image">Select Image</string>
     <string name="food_listing_details">Food Listing Details</string>
@@ -43,4 +43,20 @@
     <string name="error_required">Required Field</string>
     <string name="error_passwords_dont_match">Passwords do not match</string>
     <string name="upload_image">Upload Image</string>
+    <string name="user_rating">"Rating: %s"</string>
+    <string name="error_longer_than_20">Should be longer than 20 characters</string>
+    <string name="error_longer_than_10">Should be longer than 10</string>
+    <string name="date_format">%s/%s/%s</string>
+    <string name="select_expiration_date">Select Expiration Date</string>
+    <string name="submit">Submit</string>
+    <string name="map_id">8a8ed0ae145cfff4</string>
+    <string name="call_user">call user</string>
+    <string name="log_pickup">Log pickup</string>
+    <string name="edit_listing">Edit Listing</string>
+    <string name="user_name">%s %s</string>
+    <string name="personal_details">Personal Details</string>
+    <string name="rating_value">%s</string>
+    <string name="user_phone_number">%s</string>
+
+
 </resources>

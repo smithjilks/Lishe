@@ -17,6 +17,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <ProgressBar
+        android:id="@+id/create_listing_progress_bar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        app:layout_constraintTop_toBottomOf="@id/create_listing"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/create_listing_title"
         android:layout_width="0dp"
@@ -25,7 +36,7 @@
         android:hint="@string/food_title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/create_listing">
+        app:layout_constraintTop_toBottomOf="@id/create_listing_progress_bar">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/create_listing_title_edit_text"
@@ -56,23 +67,29 @@
             android:textColorHint="#757575" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/create_listing_expiration"
+    <Button
+        android:id="@+id/create_listing_select_expiration_date_button"
+        style="@style/Widget.Lishe.SecondaryButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        app:icon="@drawable/ic_calendar"
+        app:iconGravity="end"
+        android:text="@string/select_expiration_date"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/create_listing_description" />
+
+    <TextView
+        android:id="@+id/create_listing_expiration_date_text_view"
+        style="@style/Widget.Lishe.TextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:hint="@string/expiration_date"
+        android:padding="8dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintStart_toEndOf="@id/create_listing_select_expiration_date_button"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/create_listing_description">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/create_listing_expiration_edit_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="date"
-            android:textColorHint="#757575" />
-    </com.google.android.material.textfield.TextInputLayout>
+        app:layout_constraintTop_toTopOf="@id/create_listing_select_expiration_date_button" />
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/create_listing_image_card"
@@ -80,7 +97,7 @@
         android:layout_height="96dp"
         android:layout_marginTop="8dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/create_listing_expiration">
+        app:layout_constraintTop_toBottomOf="@id/create_listing_select_expiration_date_button">
 
         <ImageView
             android:id="@+id/food_details_image"
@@ -88,7 +105,7 @@
             android:layout_height="match_parent"
             android:importantForAccessibility="no"
             android:scaleType="centerCrop"
-            app:srcCompat="@drawable/burger" />
+            app:srcCompat="@drawable/ic_food" />
 
     </com.google.android.material.card.MaterialCardView>
 
@@ -120,7 +137,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:padding="8dp"
-        android:text="Nairobi"
+        android:text=""
         app:layout_constraintEnd_toEndOf="@id/create_listing_select_image_button"
         app:layout_constraintStart_toStartOf="@id/create_listing_select_image_button"
         app:layout_constraintTop_toTopOf="@id/create_listing_location_icon" />
@@ -134,6 +151,14 @@
         app:layout_constraintEnd_toEndOf="@id/create_listing_location_text_view"
         app:layout_constraintStart_toStartOf="@id/create_listing_location_text_view"
         app:layout_constraintTop_toBottomOf="@+id/create_listing_location_text_view" />
+
+    <fragment
+        android:id="@+id/place_autocomplete_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
     <Button
         android:id="@+id/create_listing_button"
