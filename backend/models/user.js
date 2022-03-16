@@ -12,6 +12,7 @@ const userSchema = mongoose.Schema({
   organisation: {type: Boolean, required: true},
   organisationName: {type: String, required: false},
   userType: {type: String, required: true},
+  userRating: {type: Number, required: true, default: 0},
 },
 {
   timestamps: true

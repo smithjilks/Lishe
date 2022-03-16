@@ -7,7 +7,7 @@ exports.getListings = (req, res, next) => {
   let fetchedListings;
 
   if (pageSize && currentPage) {
-    listingQuery
+    listingQueryz
       .sort({ createdAt: 1 })
 
       .skip(pageSize * (currentPage - 1))
@@ -22,11 +22,7 @@ exports.getListings = (req, res, next) => {
     })
 
     .then(count => {
-      res.status(200).json({
-        message: 'Succesfully sent from api',
-        body: fetchedListings,
-        maxListings: count
-      });
+      res.status(200).json(fetchedListings);
     })
 
     .catch(error => {
@@ -81,11 +77,7 @@ exports.getUserListings = (req, res, next) => {
     })
 
     .then(count => {
-      res.status(200).json({
-        message: 'Succesfully sent from api',
-        body: fetchedListings,
-        maxListings: count
-      });
+      res.status(200).json(fetchedListings);
     })
 
     .catch(error => {
@@ -97,6 +89,11 @@ exports.getUserListings = (req, res, next) => {
 };
 
 exports.createListing = (req, res) => {
+  if(req.body === {}) {
+    res.status(400).json({
+      message: 'Bad request'
+    });
+  }
   const url = req.protocol + '://' + req.get('host');
   const listing = new Listing({
     title: req.body.title,
@@ -110,12 +107,14 @@ exports.createListing = (req, res) => {
     individual: req.body.individual
   });
 
+  console.log(req.body)
+
   listing
     .save()
 
     .then(createdListing => {
       res.status(201).json({
-        mesaage: 'listing added successfully',
+        message: 'listing added successfully',
         listing: {
           ...createdListing._doc,
           id: createdListing._id

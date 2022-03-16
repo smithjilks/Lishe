@@ -81,7 +81,7 @@ exports.loginUser = (req, res, next) => {
 
           res.status(200).json({
             token: token,
-            expiresIn: 3600,
+            userType: fetchedUser.userType,
             userId: fetchedUser._id
           });
         });

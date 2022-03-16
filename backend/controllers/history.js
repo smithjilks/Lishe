@@ -33,11 +33,9 @@ exports.getAllHistory = (req, res, next) => {
     })
 
     .then(count => {
-      res.status(200).json({
-        message: 'Succesfully sent from api',
-        body: fetchedHistory,
-        maxHistory: count
-      });
+      res.status(200).json(
+        fetchedHistory
+      );
     })
 
     .catch(error => {
@@ -88,7 +86,7 @@ exports.getUserHistory = (req, res, next) => {
       from: 'listings',
       localField: 'listingId',
       foreignField: '_id',
-      as: 'historyDetails'
+      as: 'listingDetails'
     })
     .match({ creator: new mongoose.Types.ObjectId(req.params.id) });
 
@@ -110,11 +108,9 @@ exports.getUserHistory = (req, res, next) => {
     })
 
     .then(count => {
-      res.status(200).json({
-        message: 'Succesfully sent from api',
-        body: fetchedHistory,
-        maxHistorys: count
-      });
+      res.status(200).json(
+        fetchedHistory
+      );
     })
 
     .catch(error => {
@@ -136,11 +132,7 @@ exports.createHistory = (req, res) => {
 
     .then(createdHistory => {
       res.status(201).json({
-        mesaage: 'history added successfully',
-        history: {
-          ...createdHistory._doc,
-          id: createdHistory._id
-        }
+        message: 'history added successfully'
       });
     })
 
@@ -166,6 +158,7 @@ exports.updateHistory = (req, res, next) => {
       })
 
     .then(result => {
+      console.log(result)
       if (result.modifiedCount > 0) {
         res.status(200).json({ message: 'Update successful' });
       } else {
