@@ -2,6 +2,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 const User = require('../models/user');
+const Review = require('../models/review');
 
 exports.createUser = (req, res, next) => {
   const url = req.protocol + '://' + req.get('host');
@@ -138,7 +139,23 @@ exports.getUser = (req, res, next) => {
 
     .then(user => {
       if (user) {
-        res.status(200).json(user);
+        Review
+          .find({ createdFor: req.params.id })
+
+          .then(reviews => {
+            if (reviews.length > 0) {
+              user._doc.userRating = user.userRating / reviews.length;
+              res.status(200).json(user);
+            }
+            res.status(200).json(user);
+          })
+
+          .catch(err => {
+            res.status(500).json({
+              message: 'Fetching user failed!',
+              error: err
+            });
+          });
       } else {
         res.status(404).json({
           message: 'User does not exist'

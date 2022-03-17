@@ -7,7 +7,7 @@ exports.getListings = (req, res, next) => {
   let fetchedListings;
 
   if (pageSize && currentPage) {
-    listingQueryz
+    listingQuery
       .sort({ createdAt: 1 })
 
       .skip(pageSize * (currentPage - 1))
@@ -18,6 +18,15 @@ exports.getListings = (req, res, next) => {
   listingQuery
     .then(documents => {
       fetchedListings = documents;
+
+      fetchedListings.map(fetchedListing => {
+        const date = fetchedListing.expiration;
+        const formatedDate = new Date(date).getDate() +
+          '-' + (new Date(date).getMonth() + 1) +
+          '-' + new Date(date).getFullYear();
+        fetchedListing._doc.expiration = formatedDate;
+        return fetchedListing;
+      });
       return Listing.countDocuments();
     })
 
@@ -89,7 +98,7 @@ exports.getUserListings = (req, res, next) => {
 };
 
 exports.createListing = (req, res) => {
-  if(req.body === {}) {
+  if (req.body === {}) {
     res.status(400).json({
       message: 'Bad request'
     });
@@ -107,7 +116,7 @@ exports.createListing = (req, res) => {
     individual: req.body.individual
   });
 
-  console.log(req.body)
+  console.log(req.body);
 
   listing
     .save()

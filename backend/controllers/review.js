@@ -158,47 +158,43 @@ exports.createReview = (req, res) => {
     historyId: req.body.historyId
   });
 
-
   review
     .save()
 
     .then(createdReview => {
-
-      User.find({ _id: req.body.createdFor})
-      .then(result => {
-        console.log("Foo foof foo foo")
-        const rating = result[0].userRating + req.body.rating
-        console.log(rating)
-        
-        User
-        .updateOne(
-          {
-            _id: req.body.createdFor          },
-          {
-            $set: {userRating: rating}
-          })
-
+      User.find({ _id: req.body.createdFor })
         .then(result => {
-          if (result.modifiedCount > 0) {
-            res.status(200).json({ message: 'Update successful' });
-          } else {
-            res.status(401).json({ message: 'Not Authorized' });
-          }
-        }).catch(error => {
+          const rating = result[0].userRating + req.body.rating;
+          console.log(rating);
+
+          User
+            .updateOne(
+              { _id: req.body.createdFor },
+              {
+                $set: { userRating: rating }
+              })
+
+            .then(result => {
+              if (result.modifiedCount > 0) {
+                res.status(200).json({ message: 'Update successful' });
+              } else {
+                res.status(401).json({ message: 'Not Authorized' });
+              }
+            }).catch(error => {
+              res.status(500).json({
+                message: "Couldn't update rating!",
+                error: error
+              });
+            });
+        })
+
+        .catch(error => {
+          console.log(error);
           res.status(500).json({
-            message: "Couldn't update rating!",
+            message: 'Creating a review failed!',
             error: error
           });
         });
-      })
-
-      .catch(error => {
-        console.log(error)
-        res.status(500).json({
-          message: "Creating a review failed!",
-          error: error
-        });
-      });
 
       res.status(201).json({
         message: 'Review added successfully'

@@ -158,7 +158,7 @@ exports.updateHistory = (req, res, next) => {
       })
 
     .then(result => {
-      console.log(result)
+      console.log(result);
       if (result.modifiedCount > 0) {
         res.status(200).json({ message: 'Update successful' });
       } else {
