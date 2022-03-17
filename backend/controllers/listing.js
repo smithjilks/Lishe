@@ -48,6 +48,11 @@ exports.getListing = (req, res, next) => {
 
     .then(listing => {
       if (listing) {
+        const date = listing.expiration;
+        const formatedDate = new Date(date).getDate() +
+          '-' + (new Date(date).getMonth() + 1) +
+          '-' + new Date(date).getFullYear();
+        listing._doc.expiration = formatedDate;
         res.status(200).json(listing);
       } else {
         res.status(404).json({
@@ -82,6 +87,15 @@ exports.getUserListings = (req, res, next) => {
   listingQuery
     .then(documents => {
       fetchedListings = documents;
+
+      fetchedListings.map(fetchedListing => {
+        const date = fetchedListing.expiration;
+        const formatedDate = new Date(date).getDate() +
+        '-' + (new Date(date).getMonth() + 1) +
+        '-' + new Date(date).getFullYear();
+        fetchedListing._doc.expiration = formatedDate;
+        return fetchedListing;
+      });
       return fetchedListings.length;
     })
 
