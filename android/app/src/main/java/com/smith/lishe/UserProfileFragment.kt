@@ -77,7 +77,7 @@ class UserProfileFragment : Fragment(R.layout.fragment_user_profile) {
 
             binding.userProfileNameTextView.text = getString(R.string.user_name, userDetails.firstName, userDetails.lastName)
             binding.userProfilePhoneTextView.text = getString(R.string.user_phone_number, userDetails.phone.toBigDecimal())
-            binding.userRatingTextView.text = getString(R.string.rating_value, (userDetails.userRating.toFloat() / 5).toString())
+            binding.userRatingTextView.text = getString(R.string.rating_value, userDetails.userRating)
             binding.userProfileEmailTextView.text = userDetails.email
 
         })

@@ -87,7 +87,7 @@ class FoodListingDetailsActivity : AppCompatActivity() {
             binding.foodDetailsOwnerNameTextView.text =
                 getString(R.string.user_name, listingUser.firstName, listingUser.lastName)
             binding.foodDetailsOwnerRatingTextView.text =
-                getString(R.string.user_rating, (listingUser.userRating.toFloat() / 5).toString())
+                getString(R.string.user_rating, listingUser.userRating)
 
 
             val imgUri = listingUser.imageUrl.toUri().buildUpon().scheme("https").build()
